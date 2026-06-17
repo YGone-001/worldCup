@@ -1,0 +1,27 @@
+[project]
+name = "worldcup-prediction-engine"
+version = "0.1.0"
+description = "Basic framework for a 2026 World Cup intelligent prediction engine."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.7.0",
+    "aiokafka>=0.10.0",
+    "apscheduler>=3.10.4",
+    "httpx>=0.27.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "apps*",
+    "packages*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
