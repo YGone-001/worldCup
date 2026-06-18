@@ -211,9 +211,13 @@ gunicorn app:app --bind 0.0.0.0:5000
 - 新增数据源：扩展 `utils/live_provider.py` 的数据标准化逻辑。
 - 新增页面：在 `templates/` 添加模板，并在 `app.py` 注册路由。
 
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
+
 ## 注意事项
 
-- 当前仓库没有声明开源许可证。如需公开复用，请补充 `LICENSE`。
+- 本项目使用 MIT License。公开复用、修改和分发时请保留许可证与版权声明。
 - 本项目默认使用 Flask 开发服务器，生产环境请使用 WSGI 服务。
 - 部分预测、回测和赛事推演逻辑为演示性质，正式使用前应接入真实完赛比分、赔率快照和完整淘汰赛规则。
 - 如果远程 API 数据结构变化，可能需要更新 `utils/live_provider.py` 中的适配逻辑。
