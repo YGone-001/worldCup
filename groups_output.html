@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界杯 · 量化预测 2026</title>
+    <meta name="description" content="2026世界杯智能量化预测系统 - 基于Elo评分与泊松分布的比赛预测">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">⚽ 世界杯 · 量化预测</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link ">完整赛程</a>
+                <a href="/groups" class="nav-link active">小组总览</a>
+            </div>
+
+            <div class="nav-badge">2026</div>
+        </div>
+    </nav>
+    <main class="main-content">
+        
+<section class="page-header">
+    <h1 class="page-title">小组总览</h1>
+    <p class="page-subtitle">48支参赛队 · 12个小组</p>
+</section>
+
+<div class="groups-grid">
+    
+    <div class="group-card" style="animation-delay: 0.0s">
+        <div class="group-header">?组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">AUT</span>
+                <span class="team-name-sm">奥地利</span>
+                <span class="team-ranking">#25</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">BIH</span>
+                <span class="team-name-sm">波黑</span>
+                <span class="team-ranking">#70</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CIV</span>
+                <span class="team-name-sm">科特迪瓦</span>
+                <span class="team-ranking">#35</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">COD</span>
+                <span class="team-name-sm">刚果民主共和国</span>
+                <span class="team-ranking">#60</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CPV</span>
+                <span class="team-name-sm">佛得角</span>
+                <span class="team-ranking">#65</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CUW</span>
+                <span class="team-name-sm">库拉索</span>
+                <span class="team-ranking">#85</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CZE</span>
+                <span class="team-name-sm">捷克</span>
+                <span class="team-ranking">#36</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">HAI</span>
+                <span class="team-name-sm">海地</span>
+                <span class="team-ranking">#86</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">IRQ</span>
+                <span class="team-name-sm">伊拉克</span>
+                <span class="team-ranking">#58</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">JOR</span>
+                <span class="team-name-sm">约旦</span>
+                <span class="team-ranking">#71</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">NOR</span>
+                <span class="team-name-sm">挪威</span>
+                <span class="team-ranking">#44</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">RSA</span>
+                <span class="team-name-sm">南非</span>
+                <span class="team-ranking">#59</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">SWE</span>
+                <span class="team-name-sm">瑞典</span>
+                <span class="team-ranking">#28</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">SUI</span>
+                <span class="team-name-sm">瑞士</span>
+                <span class="team-ranking">#15</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.06s">
+        <div class="group-header">A组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">USA</span>
+                <span class="team-name-sm">美国</span>
+                <span class="team-ranking">#11</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">TUR</span>
+                <span class="team-name-sm">土耳其</span>
+                <span class="team-ranking">#26</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">MLI</span>
+                <span class="team-name-sm">马里</span>
+                <span class="team-ranking">#48</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">TTO</span>
+                <span class="team-name-sm">特立尼达</span>
+                <span class="team-ranking">#77</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.12s">
+        <div class="group-header">B组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ARG</span>
+                <span class="team-name-sm">阿根廷</span>
+                <span class="team-ranking">#1</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">JPN</span>
+                <span class="team-name-sm">日本</span>
+                <span class="team-ranking">#15</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">SEN</span>
+                <span class="team-name-sm">塞内加尔</span>
+                <span class="team-ranking">#20</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">JAM</span>
+                <span class="team-name-sm">牙买加</span>
+                <span class="team-ranking">#62</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.18s">
+        <div class="group-header">C组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">FRA</span>
+                <span class="team-name-sm">法国</span>
+                <span class="team-ranking">#2</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">NGA</span>
+                <span class="team-name-sm">尼日利亚</span>
+                <span class="team-ranking">#28</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">HON</span>
+                <span class="team-name-sm">洪都拉斯</span>
+                <span class="team-ranking">#72</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">KSA</span>
+                <span class="team-name-sm">沙特</span>
+                <span class="team-ranking">#56</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.24s">
+        <div class="group-header">D组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">BRA</span>
+                <span class="team-name-sm">巴西</span>
+                <span class="team-ranking">#3</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">KOR</span>
+                <span class="team-name-sm">韩国</span>
+                <span class="team-ranking">#22</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CMR</span>
+                <span class="team-name-sm">喀麦隆</span>
+                <span class="team-ranking">#38</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ECU</span>
+                <span class="team-name-sm">厄瓜多尔</span>
+                <span class="team-ranking">#33</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.3s">
+        <div class="group-header">E组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ESP</span>
+                <span class="team-name-sm">西班牙</span>
+                <span class="team-ranking">#4</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">UZB</span>
+                <span class="team-name-sm">乌兹别克</span>
+                <span class="team-ranking">#55</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CHL</span>
+                <span class="team-name-sm">智利</span>
+                <span class="team-ranking">#35</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CAN</span>
+                <span class="team-name-sm">加拿大</span>
+                <span class="team-ranking">#40</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.36s">
+        <div class="group-header">F组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ENG</span>
+                <span class="team-name-sm">英格兰</span>
+                <span class="team-ranking">#5</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">COL</span>
+                <span class="team-name-sm">哥伦比亚</span>
+                <span class="team-ranking">#12</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">EGY</span>
+                <span class="team-name-sm">埃及</span>
+                <span class="team-ranking">#30</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">BOL</span>
+                <span class="team-name-sm">玻利维亚</span>
+                <span class="team-ranking">#83</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.42s">
+        <div class="group-header">G组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">GER</span>
+                <span class="team-name-sm">德国</span>
+                <span class="team-ranking">#8</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">IRN</span>
+                <span class="team-name-sm">伊朗</span>
+                <span class="team-ranking">#21</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">NZL</span>
+                <span class="team-name-sm">新西兰</span>
+                <span class="team-ranking">#93</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">GHA</span>
+                <span class="team-name-sm">加纳</span>
+                <span class="team-ranking">#42</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.48s">
+        <div class="group-header">H组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">POR</span>
+                <span class="team-name-sm">葡萄牙</span>
+                <span class="team-ranking">#6</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">MEX</span>
+                <span class="team-name-sm">墨西哥</span>
+                <span class="team-ranking">#14</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">AUS</span>
+                <span class="team-name-sm">澳大利亚</span>
+                <span class="team-ranking">#25</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">SCO</span>
+                <span class="team-name-sm">苏格兰</span>
+                <span class="team-ranking">#45</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.54s">
+        <div class="group-header">I组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">NED</span>
+                <span class="team-name-sm">荷兰</span>
+                <span class="team-ranking">#7</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">QAT</span>
+                <span class="team-name-sm">卡塔尔</span>
+                <span class="team-ranking">#34</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CRC</span>
+                <span class="team-name-sm">哥斯达黎加</span>
+                <span class="team-ranking">#50</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">SRB</span>
+                <span class="team-name-sm">塞尔维亚</span>
+                <span class="team-ranking">#27</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.6s">
+        <div class="group-header">J组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">BEL</span>
+                <span class="team-name-sm">比利时</span>
+                <span class="team-ranking">#9</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">URU</span>
+                <span class="team-name-sm">乌拉圭</span>
+                <span class="team-ranking">#13</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">TUN</span>
+                <span class="team-name-sm">突尼斯</span>
+                <span class="team-ranking">#36</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CHN</span>
+                <span class="team-name-sm">中国</span>
+                <span class="team-ranking">#68</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.6599999999999999s">
+        <div class="group-header">K组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ITA</span>
+                <span class="team-name-sm">意大利</span>
+                <span class="team-ranking">#10</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">MAR</span>
+                <span class="team-name-sm">摩洛哥</span>
+                <span class="team-ranking">#16</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">PAR</span>
+                <span class="team-name-sm">巴拉圭</span>
+                <span class="team-ranking">#52</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">IDN</span>
+                <span class="team-name-sm">印尼</span>
+                <span class="team-ranking">#90</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="group-card" style="animation-delay: 0.72s">
+        <div class="group-header">L组</div>
+        <div class="group-teams">
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">CRO</span>
+                <span class="team-name-sm">克罗地亚</span>
+                <span class="team-ranking">#17</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">DEN</span>
+                <span class="team-name-sm">丹麦</span>
+                <span class="team-ranking">#19</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">ALG</span>
+                <span class="team-name-sm">阿尔及利亚</span>
+                <span class="team-ranking">#37</span>
+            </div>
+            
+            <div class="group-team-row">
+                <span class="team-code-sm">PAN</span>
+                <span class="team-name-sm">巴拿马</span>
+                <span class="team-ranking">#60</span>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+
+    </main>
+    <footer class="site-footer">
+        <p>概率 ≠ 结果。这只是模型视角，不是确定预测。</p>
+        <p>模型基于球队身价、排名、历史数据和近期状态，长期看仍需校准。</p>
+    </footer>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

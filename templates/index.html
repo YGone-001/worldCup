@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header schedule-top">
+    <h1 class="page-title">世界杯量化预测赛程</h1>
+    <p class="page-subtitle">数据实时解析 · 北京时间 {{ beijing_now }}</p>
+</section>
+
+{% if match_groups %}
+
+{% if calibration and calibration.total_finished > 0 %}
+<div class="model-accuracy-banner">
+    <div class="accuracy-title">📈 模型校准面板 · {{ calibration.total_finished }} 场已完赛</div>
+    <div class="accuracy-stats">
+        <div class="accuracy-stat">
+            <span class="stat-value">{{ calibration.correct_predictions }}/{{ calibration.total_finished }}</span>
+            <span class="stat-label">预测命中</span>
+        </div>
+        <div class="accuracy-stat">
+            <span class="stat-value">{{ calibration.accuracy_pct }}%</span>
+            <span class="stat-label">准确率</span>
+        </div>
+        <div class="accuracy-stat">
+            <span class="stat-value">{{ calibration.brier_score }}</span>
+            <span class="stat-label">Brier 分数</span>
+        </div>
+        <div class="accuracy-stat">
+            <span class="stat-value">{{ calibration.avg_outcome_probability }}%</span>
+            <span class="stat-label">平均置信度</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="schedule-sections">
+    {% for group in match_groups %}
+    {% set is_past = (group.matches[-1].status == 'finished') %}
+    <section class="schedule-section{% if is_past %} collapsed{% endif %}">
+        <div class="schedule-date-header toggle-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <h2 class="schedule-date">📅 {{ group.date }}</h2>
+            <div class="schedule-header-right">
+                <span class="schedule-count">{{ group.matches | length }} 场比赛</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+        </div>
+
+        <div class="match-grid">
+            {% for match in group.matches %}
+            <a href="/match/{{ match.id }}" class="match-card-link" style="animation-delay: {{ loop.index0 * 0.05 }}s">
+                <div class="match-card-mini{% if match.result %} has-result{% endif %}">
+                    <div class="card-header-mini">
+                        <span class="group-tag">{{ match.group }}组</span>
+                        <span class="match-time">{{ match.time }}</span>
+                        {% if match.status == 'live' %}
+                        <span class="status-tag live">进行中</span>
+                        {% elif match.status == 'upcoming' %}
+                        <span class="status-tag upcoming">未开始</span>
+                        {% elif match.status == 'finished' %}
+                        <span class="status-tag finished">已结束</span>
+                        {% endif %}
+                        <span class="round-tag">轮次 {{ match.round }}</span>
+                    </div>
+
+                    <div class="card-teams">
+                        <div class="team-side">
+                            <span class="team-flag-lg">{{ match.home_team.flag or match.home_flag }}</span>
+                            <span class="team-name-lg">{{ match.home_team.name }}</span>
+                        </div>
+                        {% if match.result %}
+                        <div class="score-display">
+                            <span class="final-score">{{ match.result.actual_score }}</span>
+                            <span class="score-label">终场</span>
+                        </div>
+                        {% else %}
+                        <span class="vs-badge">VS</span>
+                        {% endif %}
+                        <div class="team-side">
+                            <span class="team-flag-lg">{{ match.away_team.flag or match.away_flag }}</span>
+                            <span class="team-name-lg">{{ match.away_team.name }}</span>
+                        </div>
+                    </div>
+
+                    {% if match.result %}
+                    <div class="result-comparison">
+                        <div class="result-row">
+                            <span class="result-label">实际结果</span>
+                            <span class="result-value">{{ match.result.actual_outcome_label }}</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">模型预测</span>
+                            <span class="result-value">{{ match.result.predicted_outcome_label }}</span>
+                        </div>
+                        <div class="result-verdict {% if match.result.prediction_correct %}correct{% else %}wrong{% endif %}">
+                            {% if match.result.prediction_correct %}✅ 预测命中{% else %}❌ 预测偏差{% endif %}
+                            <span class="verdict-detail">(置信度 {{ match.result.outcome_probability }}%)</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if match.prediction %}
+                    {% set p = match.prediction %}
+                    <div class="mini-probs">
+                        <div class="prob-item home">
+                            <span class="prob-value">{{ p.probabilities.home_win }}%</span>
+                            <span class="prob-label">主胜</span>
+                        </div>
+                        <div class="prob-item draw">
+                            <span class="prob-value">{{ p.probabilities.draw }}%</span>
+                            <span class="prob-label">平局</span>
+                        </div>
+                        <div class="prob-item away">
+                            <span class="prob-value">{{ p.probabilities.away_win }}%</span>
+                            <span class="prob-label">客胜</span>
+                        </div>
+                    </div>
+
+                    <div class="prob-bar-mini">
+                        <div class="bar-segment home-seg" data-width="{{ p.probabilities.home_win }}"></div>
+                        <div class="bar-segment draw-seg" data-width="{{ p.probabilities.draw }}"></div>
+                        <div class="bar-segment away-seg" data-width="{{ p.probabilities.away_win }}"></div>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-footer-mini">
+                        {% if match.prediction %}
+                        <span class="suspense-mini">悬念: {{ match.prediction.suspense.label }}</span>
+                        {% endif %}
+                        <span class="view-detail">量化分析详情 →</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="empty-icon">⚽</p>
+    <p>暂无世界杯比赛安排</p>
+</div>
+{% endif %}
+{% endblock %}

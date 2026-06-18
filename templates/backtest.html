@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="match-detail-header" style="text-align: center; margin-bottom: 24px;">
+    <h2>📈 虚拟盘口与资金回测 (Bankroll Simulation)</h2>
+    <p style="color: var(--text-secondary); margin-top: 8px;">基于真实历史赔率与赛果，策略：<strong>EV > 5% 每次固定下注 100 单位</strong></p>
+</div>
+
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <div class="kpi-label">最终资金 (Final Bankroll)</div>
+        <div class="kpi-value" id="kpi-bankroll">---</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">净利润 (Net Profit)</div>
+        <div class="kpi-value" id="kpi-profit">---</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">投资回报率 (ROI)</div>
+        <div class="kpi-value" id="kpi-roi">---</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">胜率 (Win Rate)</div>
+        <div class="kpi-value" id="kpi-winrate">---</div>
+    </div>
+</div>
+
+<div class="backtest-summary">
+    <span id="kpi-bets">已下注: --- 场</span> | 
+    <span id="kpi-wins">赢: ---</span> | 
+    <span id="kpi-losses">输: ---</span>
+</div>
+
+<div class="whatif-section" style="margin-top: 24px;">
+    <h3 class="section-title">资金曲线 (Bankroll Curve)</h3>
+    <div class="whatif-chart-container" style="height: 400px;">
+        <canvas id="bankrollChart"></canvas>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    fetch('/api/v1/backtest')
+        .then(response => response.json())
+        .then(data => {
+            // Update KPIs
+            document.getElementById('kpi-bankroll').innerText = data.final_bankroll;
+            
+            const profitEl = document.getElementById('kpi-profit');
+            profitEl.innerText = (data.net_profit > 0 ? '+' : '') + data.net_profit;
+            profitEl.style.color = data.net_profit > 0 ? '#10b981' : '#ef4444';
+            
+            const roiEl = document.getElementById('kpi-roi');
+            roiEl.innerText = (data.roi > 0 ? '+' : '') + data.roi + '%';
+            roiEl.style.color = data.roi > 0 ? '#10b981' : '#ef4444';
+            
+            document.getElementById('kpi-winrate').innerText = data.win_rate + '%';
+            
+            document.getElementById('kpi-bets').innerText = `已下注: ${data.bets_placed} 场`;
+            document.getElementById('kpi-wins').innerText = `赢: ${data.wins}`;
+            document.getElementById('kpi-losses').innerText = `输: ${data.losses}`;
+
+            // Render Chart
+            const ctx = document.getElementById('bankrollChart').getContext('2d');
+            const labels = Array.from({length: data.bankroll_history.length}, (_, i) => `Bet ${i}`);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '资金余额 (Bankroll)',
+                        data: data.bankroll_history,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false } // Hide x labels if too many
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    }
+                }
+            });
+        });
+});
+</script>
+
+<style>
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.kpi-card {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+}
+.kpi-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+.kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.backtest-summary {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界杯 · 量化预测 2026</title>
+    <meta name="description" content="2026世界杯智能量化预测系统 - 基于Elo评分与泊松分布的比赛预测">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">⚽ 世界杯 · 量化预测</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link {% if active_page == 'index' %}active{% endif %}">完整赛程</a>
+                <a href="/groups" class="nav-link {% if active_page == 'groups' %}active{% endif %}">小组总览</a>
+                <a href="/backtest" class="nav-link {% if active_page == 'backtest' %}active{% endif %}">量化回测</a>
+                <a href="/tournament" class="nav-link {% if active_page == 'tournament' %}active{% endif %}">赛事推演</a>
+            </div>
+            <div class="nav-badge">2026</div>
+        </div>
+    </nav>
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <p>概率 ≠ 结果。这只是模型视角，不是确定预测。</p>
+        <p>模型基于球队身价、排名、历史数据和近期状态，长期看仍需校准。</p>
+    </footer>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

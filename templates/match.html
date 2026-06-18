@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+{% block content %}
+{% if match and match.prediction %}
+{% set p = match.prediction %}
+<div class="prediction-card" id="prediction-card">
+    <!-- 卡片顶部 -->
+    <div class="card-top-bar">
+        <span class="brand-label">世界杯 · 量化预测</span>
+        <span class="meta-label">{{ match.group }}组 · {{ match.date[5:] | replace('-', '/') }}</span>
+    </div>
+
+    <!-- 对阵信息 -->
+    <div class="matchup-section">
+        <div class="matchup-team">
+            <span class="matchup-code">{{ p.home_team.code }}</span>
+            <span class="matchup-name">{{ p.home_team.name }}</span>
+        </div>
+        {% if match.result %}
+        <div class="matchup-score-center">
+            <span class="matchup-final-score">{{ match.result.actual_score }}</span>
+            <span class="matchup-score-tag">终场比分</span>
+        </div>
+        {% else %}
+        <span class="matchup-vs">vs</span>
+        {% endif %}
+        <div class="matchup-team">
+            <span class="matchup-code">{{ p.away_team.code }}</span>
+            <span class="matchup-name">{{ p.away_team.name }}</span>
+        </div>
+    </div>
+
+    {% if match.result %}
+    <!-- 预测 vs 实际 对比 -->
+    <div class="result-detail-section">
+        <h3 class="section-title">📊 模型预测 vs 实际结果</h3>
+        <div class="result-detail-grid">
+            <div class="result-detail-item">
+                <span class="detail-label">预测结果</span>
+                <span class="detail-value">{{ match.result.predicted_outcome_label }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">实际结果</span>
+                <span class="detail-value">{{ match.result.actual_outcome_label }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">预期进球</span>
+                <span class="detail-value">{{ p.expected_goals.home }} - {{ p.expected_goals.away }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">实际进球</span>
+                <span class="detail-value">{{ match.result.actual_score }}</span>
+            </div>
+        </div>
+        <div class="result-verdict-detail {% if match.result.prediction_correct %}correct{% else %}wrong{% endif %}">
+            {% if match.result.prediction_correct %}
+            ✅ 模型预测命中！给予实际结果的置信度为 {{ match.result.outcome_probability }}%
+            {% else %}
+            ❌ 模型预测偏差。预测为「{{ match.result.predicted_outcome_label }}」({{ match.result.predicted_probability }}%)，实际为「{{ match.result.actual_outcome_label }}」(模型给予 {{ match.result.outcome_probability }}%)
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 胜平负概率 -->
+    <div class="probabilities-section">
+        <div class="prob-col">
+            <span class="prob-number home-color" data-target="{{ p.probabilities.home_win }}">0%</span>
+            <span class="prob-team-label">{{ p.home_team.name }}</span>
+            {% if p.ev_analysis and p.ev_analysis.home.is_value %}
+            <div class="value-badge">💰 价值发现 (EV: +{{ p.ev_analysis.home.ev }}% | 凯利仓位: {{ p.ev_analysis.home.kelly_pct }}%)</div>
+            {% endif %}
+        </div>
+        <div class="prob-col">
+            <span class="prob-number draw-color" data-target="{{ p.probabilities.draw }}">0%</span>
+            <span class="prob-team-label">平</span>
+            {% if p.ev_analysis and p.ev_analysis.draw.is_value %}
+            <div class="value-badge">💰 价值发现 (EV: +{{ p.ev_analysis.draw.ev }}% | 凯利仓位: {{ p.ev_analysis.draw.kelly_pct }}%)</div>
+            {% endif %}
+        </div>
+        <div class="prob-col">
+            <span class="prob-number away-color" data-target="{{ p.probabilities.away_win }}">0%</span>
+            <span class="prob-team-label">{{ p.away_team.name }}</span>
+            {% if p.ev_analysis and p.ev_analysis.away.is_value %}
+            <div class="value-badge">💰 价值发现 (EV: +{{ p.ev_analysis.away.ev }}% | 凯利仓位: {{ p.ev_analysis.away.kelly_pct }}%)</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 概率条 -->
+    <div class="probability-bar">
+        <div class="bar-segment home-seg" data-width="{{ p.probabilities.home_win }}"></div>
+        <div class="bar-segment draw-seg" data-width="{{ p.probabilities.draw }}"></div>
+        <div class="bar-segment away-seg" data-width="{{ p.probabilities.away_win }}"></div>
+    </div>
+
+    {% if p.market and p.market.odds and p.market.implied_probabilities and p.market.implied_probabilities.home_win != None %}
+    <div class="odds-comparison-section">
+        <h3 class="section-title">⚖️ 模型 vs 机构隐含概率</h3>
+        <div class="odds-grid">
+            <div class="odds-row header">
+                <span>选项</span>
+                <span>外部赔率</span>
+                <span>隐含概率</span>
+                <span>模型概率</span>
+            </div>
+            <div class="odds-row {% if p.ev_analysis and p.ev_analysis.home.is_value %}ev-positive{% endif %}">
+                <span>主胜</span>
+                <span>{{ p.market.odds.home_win }}</span>
+                <span>{{ p.market.implied_probabilities.home_win }}%</span>
+                <span>{{ p.model_probabilities.home_win }}%</span>
+            </div>
+            <div class="odds-row {% if p.ev_analysis and p.ev_analysis.draw.is_value %}ev-positive{% endif %}">
+                <span>平局</span>
+                <span>{{ p.market.odds.draw }}</span>
+                <span>{{ p.market.implied_probabilities.draw }}%</span>
+                <span>{{ p.model_probabilities.draw }}%</span>
+            </div>
+            <div class="odds-row {% if p.ev_analysis and p.ev_analysis.away.is_value %}ev-positive{% endif %}">
+                <span>客胜</span>
+                <span>{{ p.market.odds.away_win }}</span>
+                <span>{{ p.market.implied_probabilities.away_win }}%</span>
+                <span>{{ p.model_probabilities.away_win }}%</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 预测比分 Top3 -->
+    <div class="scores-section">
+        <h3 class="section-title">模型最可能的三个比分</h3>
+        <div class="score-boxes">
+            {% for s in p.top_scores %}
+            <div class="score-box{% if match.result and s.score == match.result.actual_score %} score-hit{% endif %}">
+                <span class="score-value">{{ s.score }}</span>
+                <span class="score-prob">{{ s.probability }}%</span>
+                {% if match.result and s.score == match.result.actual_score %}
+                <span class="score-hit-badge">命中!</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 进球数推测 -->
+    <div class="goals-prediction-section">
+        <h3 class="section-title">总进球数推测</h3>
+        <div class="goals-stats-grid">
+            <div class="goals-stat-item">
+                <span class="goals-lbl">最可能总进球</span>
+                <span class="goals-val">{{ p.goals_prediction.most_likely }} 球</span>
+            </div>
+            <div class="goals-stat-item">
+                <span class="goals-lbl">＞2.5球 (大)</span>
+                <span class="goals-val">{{ (p.goals_prediction.over_2_5 * 100) | round(1) }}%</span>
+            </div>
+            <div class="goals-stat-item">
+                <span class="goals-lbl">＜2.5球 (小)</span>
+                <span class="goals-val">{{ (p.goals_prediction.under_2_5 * 100) | round(1) }}%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 沙盘推演 (What-If Simulator) -->
+    <div class="whatif-section">
+        <h3 class="section-title">🔮 实时沙盘推演 (What-If)</h3>
+        <p class="whatif-desc">拖动时间或改变进球/红牌，预测概率与预期将实时重算。</p>
+        <div class="whatif-controls">
+            <div class="whatif-control-row">
+                <label>比赛时间: <span id="wi-time-val">0</span>'</label>
+                <input type="range" id="wi-time" min="0" max="90" value="0">
+            </div>
+            <div class="whatif-grid">
+                <div class="whatif-col">
+                    <h4>{{ p.home_team.name }}</h4>
+                    <div class="wi-input-group">
+                        <label>进球</label>
+                        <input type="number" id="wi-home-score" min="0" max="15" value="0">
+                    </div>
+                    <div class="wi-input-group">
+                        <label>红牌</label>
+                        <input type="number" id="wi-home-red" min="0" max="4" value="0">
+                    </div>
+                </div>
+                <div class="whatif-col">
+                    <h4>{{ p.away_team.name }}</h4>
+                    <div class="wi-input-group">
+                        <label>进球</label>
+                        <input type="number" id="wi-away-score" min="0" max="15" value="0">
+                    </div>
+                    <div class="wi-input-group">
+                        <label>红牌</label>
+                        <input type="number" id="wi-away-red" min="0" max="4" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="whatif-chart-container">
+            <canvas id="winProbChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="info-divider">
+        <span>—— 球星状态 · 伤病 · 新人 ——</span>
+    </div>
+
+    <!-- 球队情报 -->
+    <div class="intel-section">
+        {% for note in p.key_info.home_notes %}
+        <div class="intel-row">
+            <span class="intel-team home-tag">{{ p.home_team.name }}</span>
+            <span class="intel-text">{{ note }}</span>
+        </div>
+        {% endfor %}
+        {% for inj in p.key_info.home_injuries %}
+        <div class="intel-row">
+            <span class="intel-team home-tag">{{ p.home_team.name }}</span>
+            <span class="intel-text injury-text">🏥 {{ inj }}</span>
+        </div>
+        {% endfor %}
+        {% for note in p.key_info.away_notes %}
+        <div class="intel-row">
+            <span class="intel-team away-tag">{{ p.away_team.name }}</span>
+            <span class="intel-text">{{ note }}</span>
+        </div>
+        {% endfor %}
+        {% for inj in p.key_info.away_injuries %}
+        <div class="intel-row">
+            <span class="intel-team away-tag">{{ p.away_team.name }}</span>
+            <span class="intel-text injury-text">🏥 {{ inj }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 悬念指数 -->
+    <div class="suspense-section">
+        <span class="suspense-label">悬念指数</span>
+        <span class="suspense-stars">
+            {% for i in range(p.suspense.stars) %}<span class="star filled">★</span>{% endfor %}{% for i in range(5 - p.suspense.stars) %}<span class="star empty">☆</span>{% endfor %}
+        </span>
+        <span class="suspense-text">{{ p.suspense.label }}</span>
+    </div>
+
+    <!-- 模型说明 -->
+    <div class="disclaimer-section">
+        <p>概率 ≠ 结果。这只是一个模型的视角，不是稳赚预言。</p>
+        <p>模型基于各队身价/排名/历史数据，会有偏差，长期看校准。</p>
+    </div>
+</div>
+
+<div class="back-nav">
+    <a href="/" class="back-link">← 返回比赛列表</a>
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="empty-icon">❌</p>
+    <p>未找到该比赛</p>
+    <a href="/" class="back-link">← 返回首页</a>
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const matchId = "{{ match.id }}";
+        if (!matchId) return;
+        
+        const wiTime = document.getElementById("wi-time");
+        const wiTimeVal = document.getElementById("wi-time-val");
+        const wiHomeScore = document.getElementById("wi-home-score");
+        const wiAwayScore = document.getElementById("wi-away-score");
+        const wiHomeRed = document.getElementById("wi-home-red");
+        const wiAwayRed = document.getElementById("wi-away-red");
+        
+        const probHome = document.querySelector(".prob-number.home-color");
+        const probDraw = document.querySelector(".prob-number.draw-color");
+        const probAway = document.querySelector(".prob-number.away-color");
+        
+        const barHome = document.querySelector(".bar-segment.home-seg");
+        const barDraw = document.querySelector(".bar-segment.draw-seg");
+        const barAway = document.querySelector(".bar-segment.away-seg");
+        
+        let chartInstance = null;
+        
+        function initChart() {
+            const ctx = document.getElementById('winProbChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        { label: '{{ p.home_team.name }} 胜率', data: [], borderColor: '#3b82f6', tension: 0.3, fill: false },
+                        { label: '平局概率', data: [], borderColor: '#9ca3af', tension: 0.3, fill: false },
+                        { label: '{{ p.away_team.name }} 胜率', data: [], borderColor: '#ef4444', tension: 0.3, fill: false }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: '比赛时间 (分钟)', color: '#9ca3af' }, ticks: { color: '#9ca3af'} },
+                        y: { title: { display: true, text: '概率 (%)', color: '#9ca3af' }, min: 0, max: 100, ticks: { color: '#9ca3af'} }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#e5e7eb' } }
+                    }
+                }
+            });
+        }
+        
+        async function fetchSimulation() {
+            const payload = {
+                minute: parseInt(wiTime.value) || 0,
+                home_score: parseInt(wiHomeScore.value) || 0,
+                away_score: parseInt(wiAwayScore.value) || 0,
+                home_red: parseInt(wiHomeRed.value) || 0,
+                away_red: parseInt(wiAwayRed.value) || 0
+            };
+            wiTimeVal.innerText = payload.minute;
+            
+            try {
+                const res = await fetch(`/api/match/${matchId}/simulate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.prediction) {
+                    updateUI(data.prediction);
+                }
+                if (data.trend) {
+                    updateChart(data.trend);
+                }
+            } catch(e) {
+                console.error("Simulation failed:", e);
+            }
+        }
+        
+        function updateUI(pred) {
+            const probs = pred.probabilities;
+            probHome.innerText = probs.home_win + "%";
+            probDraw.innerText = probs.draw + "%";
+            probAway.innerText = probs.away_win + "%";
+            
+            barHome.style.width = probs.home_win + "%";
+            barDraw.style.width = probs.draw + "%";
+            barAway.style.width = probs.away_win + "%";
+        }
+        
+        function updateChart(trend) {
+            if(!chartInstance) return;
+            const labels = trend.map(t => t.minute + "'");
+            const dHome = trend.map(t => t.home_win);
+            const dDraw = trend.map(t => t.draw);
+            const dAway = trend.map(t => t.away_win);
+            
+            chartInstance.data.labels = labels;
+            chartInstance.data.datasets[0].data = dHome;
+            chartInstance.data.datasets[1].data = dDraw;
+            chartInstance.data.datasets[2].data = dAway;
+            chartInstance.update();
+        }
+        
+        const inputs = [wiTime, wiHomeScore, wiAwayScore, wiHomeRed, wiAwayRed];
+        inputs.forEach(el => {
+            if(el) {
+                el.addEventListener('change', fetchSimulation);
+                if(el.type === 'range') el.addEventListener('input', () => { wiTimeVal.innerText = wiTime.value; });
+            }
+        });
+        
+        // Initial setup
+        initChart();
+        fetchSimulation();
+    });
+</script>
+{% endblock %}

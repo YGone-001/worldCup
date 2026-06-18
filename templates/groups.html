@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <h1 class="page-title">小组总览</h1>
+    <p class="page-subtitle">48支参赛队 · 12个小组</p>
+</section>
+
+<div class="groups-grid">
+    {% for group_name, teams in groups.items() %}
+    <div class="group-card" style="animation-delay: {{ loop.index0 * 0.06 }}s">
+        <div class="group-header">{{ group_name }}组</div>
+        <div class="group-teams">
+            {% for team in teams %}
+            <div class="group-team-row">
+                {% if team.flag %}
+                <span class="team-flag" style="font-size: 1.4rem; width: 32px; text-align: center; display: inline-block;">{{ team.flag }}</span>
+                {% else %}
+                <span class="team-code-sm">{{ team.code }}</span>
+                {% endif %}
+                <span class="team-name-sm" style="margin-left: 8px;">{{ team.name }}</span>
+                <span class="team-ranking">#{{ team.fifa_ranking }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
