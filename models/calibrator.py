@@ -118,15 +118,50 @@ def add_result_comparison(match: dict) -> dict:
     sorted_probs = sorted(probabilities[k] for k in required_keys)
     confidence_gap = sorted_probs[2] - sorted_probs[1]
 
+    # 提取队名
+    home_team_name = _extract_team_name(match, "home")
+    away_team_name = _extract_team_name(match, "away")
+
     # 检查预测比分是否命中
     actual_score_str = f"{home_goals}-{away_goals}"
     predicted_score_hit = False
+    predicted_score_strs = []
     top_scores = prediction.get("top_scores")
     if top_scores and isinstance(top_scores, list):
         predicted_score_strs = [
             s.get("score", "") for s in top_scores if isinstance(s, dict)
         ]
         predicted_score_hit = actual_score_str in predicted_score_strs
+
+    # 赛后对账动态文案生成
+    three_tiers = "/".join(predicted_score_strs[:3]) if predicted_score_strs else "暂无"
+    
+    home_prob = probabilities.get("home_win", 0)
+    away_prob = probabilities.get("away_win", 0)
+    draw_prob = probabilities.get("draw", 0)
+    
+    if predicted_outcome == "home_win":
+        predicted_prob_text = f"看好{home_team_name}{home_prob}%(高于{away_team_name}{away_prob}%)"
+        predicted_target = home_team_name
+    elif predicted_outcome == "away_win":
+        predicted_prob_text = f"看好{away_team_name}{away_prob}%(高于{home_team_name}{home_prob}%)"
+        predicted_target = away_team_name
+    else:
+        predicted_prob_text = f"看好平局{draw_prob}%"
+        predicted_target = "平局"
+        
+    win_loss_desc = f"看好{predicted_target}赢,结果{actual_score_str},命中" if (predicted_outcome == actual_outcome) else f"看好{predicted_target}赢,结果{actual_score_str},没中"
+    if actual_outcome == "draw" and predicted_outcome != "draw":
+        win_loss_desc = f"看好{predicted_target}赢,结果{actual_score_str}平,没中"
+        
+    score_desc = f"{actual_score_str}在三档内,准确命中" if predicted_score_hit else f"{actual_score_str}不在三档(最多三球),没分析准"
+    
+    review_text = match.get("review_text", "")
+    if not review_text:
+        if predicted_outcome == actual_outcome:
+            review_text = f"本场比赛走向符合预期，{home_team_name} 与 {away_team_name} 按照模型概率给出了合理结果。"
+        else:
+            review_text = f"发生意外偏离，{home_team_name} {actual_score_str} {away_team_name} 的剧本超出了赛前模型推演的主要范畴。"
 
     # 中文标签映射
     outcome_labels = {
@@ -146,6 +181,11 @@ def add_result_comparison(match: dict) -> dict:
         "predicted_probability": probabilities.get(predicted_outcome, 0),
         "predicted_score_hit": predicted_score_hit,
         "confidence_gap": confidence_gap,
+        "three_tiers": three_tiers,
+        "predicted_prob_text": predicted_prob_text,
+        "win_loss_desc": win_loss_desc,
+        "score_desc": score_desc,
+        "review_text": review_text
     }
 
     return enriched

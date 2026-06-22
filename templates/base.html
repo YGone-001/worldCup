@@ -9,6 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    (function() {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = storedTheme || (prefersLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    function toggleTheme() {
+        var currentTheme = document.documentElement.getAttribute('data-theme');
+        var targetTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('theme', targetTheme);
+    }
+    </script>
 </head>
 <body>
     <nav class="top-nav">
@@ -19,8 +33,15 @@
                 <a href="/strategy" class="nav-link {% if active_page == 'strategy' %}active{% endif %}">💰 智能策略</a>
                 <a href="/groups" class="nav-link {% if active_page == 'groups' %}active{% endif %}">📊 小组积分</a>
                 <a href="/tournament" class="nav-link {% if active_page == 'tournament' %}active{% endif %}">🏆 赛事模拟</a>
+                <a href="/review" class="nav-link {% if active_page == 'review' %}active{% endif %}">🧾 赛后对账</a>
             </div>
-            <div class="nav-badge">2026</div>
+            <div class="nav-right">
+                <div class="nav-badge">2026</div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="切换明暗模式">
+                    <span class="icon-sun">☀️</span>
+                    <span class="icon-moon">🌙</span>
+                </button>
+            </div>
         </div>
     </nav>
     <main class="main-content">

@@ -7,7 +7,7 @@
     
     <div class="hero-banner" style="margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; padding: 24px; border-radius: var(--radius-lg);">
         <div style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 800; margin-bottom: 12px; letter-spacing: 0.1em;">🔥 最可能上演的决赛对阵</div>
-        <div id="top-matchup" style="font-size: 2rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);">跑演中...</div>
+        <div id="top-matchup" style="font-size: 2rem; font-weight: 900; color: var(--text-primary); text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);">跑演中...</div>
     </div>
 </div>
 <div class="particle-tree-wrapper">
@@ -16,9 +16,9 @@
 </div>
 
 <div class="tournament-container" style="overflow-x: auto; margin-top: 32px;">
-    <table class="tournament-table premium-table" style="width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); overflow: hidden;">
+    <table class="tournament-table premium-table" style="width: 100%; border-collapse: collapse; background: var(--bg-overlay); border-radius: var(--radius-md); overflow: hidden;">
         <thead>
-            <tr style="background: rgba(255,255,255,0.05); text-align: left; border-bottom: 1px solid var(--glass-border);">
+            <tr style="background: var(--bg-card); text-align: left; border-bottom: 1px solid var(--glass-border);">
                 <th style="padding: 16px; text-align: center;">排名</th>
                 <th style="padding: 16px;">球队</th>
                 <th style="padding: 16px; width: 12%;">夺冠 (Win)</th>
@@ -40,7 +40,7 @@ function createProgressBar(percent, colorStr) {
     if (percent === 0) return '<span style="color:var(--text-muted);">0%</span>';
     return `
         <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="flex-grow: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+            <div style="flex-grow: 1; height: 6px; background: var(--bg-card); border-radius: 3px; overflow: hidden;">
                 <div style="width: ${percent}%; height: 100%; background: ${colorStr};"></div>
             </div>
             <span style="font-weight: 600; width: 40px; text-align: right; color: ${colorStr};">${percent}%</span>
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             data.leaderboard.forEach((team, index) => {
                 const tr = document.createElement('tr');
-                tr.style.borderBottom = '1px solid rgba(255,255,255,0.02)';
+                tr.style.borderBottom = '1px solid var(--glass-border)';
                 
                 // Highlight top 3
                 let rankStyle = '';
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td style="padding: 12px;">${createProgressBar(team.group_adv, '#475569')}</td>
                 `;
                 
-                tr.addEventListener('mouseover', () => tr.style.background = 'rgba(255,255,255,0.03)');
+                tr.addEventListener('mouseover', () => tr.style.background = 'var(--bg-overlay)');
                 tr.addEventListener('mouseout', () => tr.style.background = 'transparent');
                 
                 tbody.appendChild(tr);
@@ -176,7 +176,7 @@ function initParticleTree(leaderboard) {
         ctx.clearRect(0, 0, w, h);
         
         // Stage Labels
-        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
         ctx.font = '600 12px Inter';
         ctx.textAlign = 'center';
         const labels = ['Top 8', 'R16', 'QF', 'SF', 'Final', 'Champion'];

@@ -109,6 +109,28 @@ def groups():
     from utils.data_loader import get_live_standings
     return render_template("groups.html", groups=get_live_standings(), active_page="groups")
 
+@app.route("/review")
+def review():
+    now = get_beijing_now()
+    odds_map = get_odds_map()
+    matches = [
+        enrich_match(add_odds(add_time_status(m, now), odds_map))
+        for m in get_schedule()
+    ]
+    calibration = compute_calibration(matches)
+    
+    # 按照日期分组
+    finished_matches = [m for m in matches if "result" in m]
+    finished_matches.sort(key=lambda x: x.get("date", "") + " " + x.get("time", "00:00"))
+
+    review_groups = []
+    for match in finished_matches:
+        if not review_groups or review_groups[-1]["date"] != match["date"]:
+            review_groups.append({"date": match["date"], "matches": []})
+        review_groups[-1]["matches"].append(match)
+
+    return render_template("review.html", calibration=calibration, review_groups=review_groups, active_page="review")
+
 
 
 @app.route("/api/today")

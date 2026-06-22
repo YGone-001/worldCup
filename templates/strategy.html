@@ -32,7 +32,7 @@
                 <div style="font-size: 0.9rem; color: var(--text-secondary);">复合赔率: <span id="doubleOdds" style="color:#fff; font-weight:700;">--</span></div>
             </div>
         </div>
-        <div id="doubleLegs" style="background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
+        <div id="doubleLegs" style="background: var(--bg-overlay); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
             <!-- legs injected here -->
         </div>
         <div class="kelly-row" id="doubleKellyRow" data-kelly="0" data-odds="0" style="margin-top: 16px;">
@@ -51,7 +51,7 @@
                 <div style="font-size: 0.9rem; color: var(--text-secondary);">复合赔率: <span id="trebleOdds" style="color:#fff; font-weight:700;">--</span></div>
             </div>
         </div>
-        <div id="trebleLegs" style="background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
+        <div id="trebleLegs" style="background: var(--bg-overlay); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
             <!-- legs injected here -->
         </div>
         <div class="kelly-row" id="trebleKellyRow" data-kelly="0" data-odds="0" style="margin-top: 16px;">
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderLegs(container, legs) {
         container.innerHTML = legs.map(l => `
-            <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--bg-card);">
                 <span style="color: #cbd5e1; font-weight: 600;">${l.match_name}</span>
                 <span>
                     <span style="color: #10b981; font-weight:600; margin-right: 8px;">${l.outcome}</span>

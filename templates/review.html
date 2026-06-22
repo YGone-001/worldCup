@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header schedule-top">
+    <h1 class="page-title">赛后对账与模型校验</h1>
+    <p class="page-subtitle">模型预测与真实赛果的偏差分析 · 北京时间 {{ beijing_now }}</p>
+</section>
+
+{% if review_groups %}
+
+{% if calibration and calibration.total_finished > 0 %}
+<div class="premium-accuracy-banner">
+    <div class="acc-header">
+        <span class="acc-icon">📊</span> 
+        <span class="acc-title">模型准确率看板</span>
+        <span class="acc-badge">{{ calibration.total_finished }}场已完赛验证</span>
+    </div>
+    <div class="acc-grid">
+        <div class="acc-stat">
+            <span class="acc-val">{{ calibration.accuracy_pct }}%</span>
+            <span class="acc-lbl">综合命中率 ({{ calibration.correct_predictions }}/{{ calibration.total_finished }})</span>
+        </div>
+        <div class="acc-stat">
+            <span class="acc-val">{{ calibration.brier_score }}</span>
+            <span class="acc-lbl">Brier 评分 (越低越好)</span>
+        </div>
+        <div class="acc-stat">
+            <span class="acc-val">{{ calibration.avg_outcome_probability }}%</span>
+            <span class="acc-lbl">平均预测置信度</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="schedule-sections">
+    {% for group in review_groups %}
+    {% set is_latest = loop.last %}
+    <section class="schedule-section{% if not is_latest %} collapsed{% endif %}"{% if is_latest %} id="latest-review-section"{% endif %}>
+        <div class="schedule-date-header toggle-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <h2 class="schedule-date">📅 {{ group.date }}</h2>
+            <div class="schedule-header-right">
+                <span class="schedule-count">{{ group.matches | length }} 场完赛</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+        </div>
+
+        <div class="match-grid">
+            {% for match in group.matches %}
+            <a href="/match/{{ match.id }}" class="match-card-link" style="animation-delay: {{ loop.index0 * 0.05 }}s">
+                <div class="match-card-premium has-result{% if match.prediction and match.prediction.suspense.stars == '⭐⭐⭐⭐⭐' %} heartbeat-card{% endif %}">
+
+                    <div class="card-header-mini">
+                        <span class="group-tag">{{ match.group }}组</span>
+                        <span class="match-time">{{ match.time }}</span>
+                        <span class="status-tag finished">已完赛</span>
+                        <span class="round-tag">轮次 {{ match.round }}</span>
+                    </div>
+
+                    <div class="card-teams">
+                        <div class="team-side">
+                            <div class="team-badge home-bg-mini">{{ match.home_team.code }}</div>
+                            <span class="team-name-lg">{{ match.home_team.name }}</span>
+                        </div>
+                        
+                        <div class="score-display">
+                            <span class="final-score">{{ match.result.actual_score }}</span>
+                            <span class="score-label">终场</span>
+                        </div>
+                        
+                        <div class="team-side">
+                            <div class="team-badge away-bg-mini">{{ match.away_team.code }}</div>
+                            <span class="team-name-lg">{{ match.away_team.name }}</span>
+                        </div>
+                    </div>
+
+                    {% if match.result %}
+                    <div class="result-comparison">
+                        <div class="result-row">
+                            <span class="result-label">实际结果</span>
+                            <span class="result-value">{{ match.result.actual_outcome_label }}</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">模型预测</span>
+                            <span class="result-value">{{ match.result.predicted_outcome_label }}</span>
+                        </div>
+                        <div class="result-verdict {% if match.result.prediction_correct %}correct{% else %}wrong{% endif %}">
+                            {% if match.result.prediction_correct %}✅ 预测命中{% else %}❌ 预测偏差{% endif %}
+                            <span class="verdict-detail">(模型置信度 {{ match.result.outcome_probability }}%)</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if match.prediction %}
+                    {% set p = match.prediction %}
+                    <div class="mini-probs">
+                        <div class="prob-item home{% if p.ev_analysis.home.is_value %} value-text{% endif %}">
+                            <span class="prob-value">{{ p.probabilities.home_win }}%</span>
+                            <span class="prob-label">主胜</span>
+                        </div>
+                        <div class="prob-item draw{% if p.ev_analysis.draw.is_value %} value-text{% endif %}">
+                            <span class="prob-value">{{ p.probabilities.draw }}%</span>
+                            <span class="prob-label">平局</span>
+                        </div>
+                        <div class="prob-item away{% if p.ev_analysis.away.is_value %} value-text{% endif %}">
+                            <span class="prob-value">{{ p.probabilities.away_win }}%</span>
+                            <span class="prob-label">客胜</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-footer-mini">
+                        {% if match.prediction %}
+                        <span class="suspense-mini">
+                            🔥 悬念度:
+                            {% for i in range(p.suspense.stars) %}<span class="star-on">★</span>{% endfor %}{% for i in range(5 - p.suspense.stars) %}<span class="star-off">★</span>{% endfor %}
+                        </span>
+                        {% endif %}
+                        <span class="view-detail">复盘详情 →</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="empty-icon">🧾</p>
+    <p>暂无已完赛的对账数据</p>
+</div>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var target = document.getElementById('latest-review-section');
+    if (target) {
+        setTimeout(function() {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+    }
+});
+</script>
+{% endblock %}
