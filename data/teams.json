@@ -1,0 +1,1746 @@
+{
+  "teams": {
+    "USA": {
+      "name": "美国",
+      "code": "USA",
+      "flag": "🇺🇸",
+      "group": "A",
+      "fifa_ranking": 11,
+      "elo_rating": 1920,
+      "squad_value_million": 450,
+      "attack_rating": 0.72,
+      "defense_rating": 0.68,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "普利西奇",
+        "雷纳",
+        "麦肯尼"
+      ],
+      "injuries": [],
+      "notes": [
+        "东道主优势,主场作战士气高昂",
+        "普利西奇状态火热,近5场4球"
+      ]
+    },
+    "TUR": {
+      "name": "土耳其",
+      "code": "TUR",
+      "flag": "🇹🇷",
+      "group": "A",
+      "fifa_ranking": 26,
+      "elo_rating": 1820,
+      "squad_value_million": 380,
+      "attack_rating": 0.7,
+      "defense_rating": 0.65,
+      "recent_form": [
+        1,
+        0,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "恰尔汗奥卢",
+        "耶尔德兹",
+        "居莱尔"
+      ],
+      "injuries": [
+        "耶尔德兹(轻伤疑)"
+      ],
+      "notes": [
+        "欧洲杯后信心提升",
+        "中场创造力强"
+      ]
+    },
+    "MLI": {
+      "name": "马里",
+      "code": "MLI",
+      "flag": "🇲🇱",
+      "group": "A",
+      "fifa_ranking": 48,
+      "elo_rating": 1620,
+      "squad_value_million": 65,
+      "attack_rating": 0.55,
+      "defense_rating": 0.52,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        0
+      ],
+      "tournament_experience": 0.15,
+      "key_players": [
+        "比索马",
+        "哈伊达拉"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲杯表现亮眼",
+        "首次参加世界杯"
+      ]
+    },
+    "TTO": {
+      "name": "特立尼达",
+      "code": "TTO",
+      "flag": "🇹🇹",
+      "group": "A",
+      "fifa_ranking": 77,
+      "elo_rating": 1450,
+      "squad_value_million": 12,
+      "attack_rating": 0.42,
+      "defense_rating": 0.45,
+      "recent_form": [
+        0.5,
+        0,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "利维",
+        "加西亚"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美预选赛突围",
+        "防守反击型球队"
+      ]
+    },
+    "ARG": {
+      "name": "阿根廷",
+      "code": "ARG",
+      "flag": "🇦🇷",
+      "group": "B",
+      "fifa_ranking": 1,
+      "elo_rating": 2060,
+      "squad_value_million": 750,
+      "attack_rating": 0.92,
+      "defense_rating": 0.82,
+      "recent_form": [
+        1,
+        1,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.95,
+      "key_players": [
+        "梅西",
+        "阿尔瓦雷斯",
+        "恩佐"
+      ],
+      "injuries": [],
+
+      "notes": [
+        "卫冕冠军,梅西最后一届",
+        "阵容深度全球顶级"
+      ]
+    },
+    "JPN": {
+      "name": "日本",
+      "code": "JPN",
+      "flag": "🇯🇵",
+      "group": "B",
+      "fifa_ranking": 15,
+      "elo_rating": 1870,
+      "squad_value_million": 320,
+      "attack_rating": 0.74,
+      "defense_rating": 0.72,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        1
+      ],
+      "tournament_experience": 0.55,
+      "key_players": [
+        "久保建英",
+        "三笘薫",
+        "远藤航"
+      ],
+      "injuries": [],
+      "notes": [
+        "亚洲杯冠军,技战术成熟",
+        "高位逼抢体系完善"
+      ]
+    },
+    "SEN": {
+      "name": "塞内加尔",
+      "code": "SEN",
+      "flag": "🇸🇳",
+      "group": "B",
+      "fifa_ranking": 20,
+      "elo_rating": 1840,
+      "squad_value_million": 280,
+      "attack_rating": 0.7,
+      "defense_rating": 0.68,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0,
+        1
+      ],
+      "tournament_experience": 0.45,
+      "key_players": [
+        "迪亚",
+        "库利巴利",
+        "格耶"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲冠军,身体素质出色",
+        "前场速度极快"
+      ]
+    },
+    "JAM": {
+      "name": "牙买加",
+      "code": "JAM",
+      "flag": "🇯🇲",
+      "group": "B",
+      "fifa_ranking": 62,
+      "elo_rating": 1520,
+      "squad_value_million": 35,
+      "attack_rating": 0.5,
+      "defense_rating": 0.48,
+      "recent_form": [
+        0,
+        1,
+        0.5,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "安东尼奥",
+        "贝利"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美金杯赛亚军",
+        "速度型球队"
+      ]
+    },
+    "FRA": {
+      "name": "法国",
+      "code": "FRA",
+      "flag": "🇫🇷",
+      "group": "C",
+      "fifa_ranking": 2,
+      "elo_rating": 2040,
+      "squad_value_million": 1400,
+      "attack_rating": 0.9,
+      "defense_rating": 0.83,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        1,
+        1
+      ],
+      "tournament_experience": 0.92,
+      "key_players": [
+        "姆巴佩",
+        "格列兹曼",
+        "登贝莱"
+      ],
+      "injuries": [],
+      "notes": [
+        "阵容身价全球第二",
+        "姆巴佩处巅峰期"
+      ]
+    },
+    "NGA": {
+      "name": "尼日利亚",
+      "code": "NGA",
+      "flag": "🇳🇬",
+      "group": "C",
+      "fifa_ranking": 28,
+      "elo_rating": 1780,
+      "squad_value_million": 240,
+      "attack_rating": 0.68,
+      "defense_rating": 0.62,
+      "recent_form": [
+        1,
+        0,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "奥西门",
+        "伊沃比",
+        "恩迪迪"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲杯亚军",
+        "奥西门进攻核心"
+      ]
+    },
+    "HON": {
+      "name": "洪都拉斯",
+      "code": "HON",
+      "flag": "🇭🇳",
+      "group": "C",
+      "fifa_ranking": 72,
+      "elo_rating": 1480,
+      "squad_value_million": 18,
+      "attack_rating": 0.45,
+      "defense_rating": 0.5,
+      "recent_form": [
+        0.5,
+        0,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "洛萨诺",
+        "基罗斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美预选赛第四",
+        "防守型球队"
+      ]
+    },
+    "KSA": {
+      "name": "沙特",
+      "code": "KSA",
+      "flag": "🇸🇦",
+      "group": "C",
+      "fifa_ranking": 56,
+      "elo_rating": 1560,
+      "squad_value_million": 42,
+      "attack_rating": 0.52,
+      "defense_rating": 0.58,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.35,
+      "key_players": [
+        "多萨里",
+        "坎诺",
+        "费拉斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "上届爆冷胜阿根廷",
+        "主打控球"
+      ]
+    },
+    "BRA": {
+      "name": "巴西",
+      "code": "BRA",
+      "flag": "🇧🇷",
+      "group": "D",
+      "fifa_ranking": 3,
+      "elo_rating": 2020,
+      "squad_value_million": 1200,
+      "attack_rating": 0.88,
+      "defense_rating": 0.78,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.9,
+      "key_players": [
+        "维尼修斯",
+        "罗德里戈",
+        "帕奎塔"
+      ],
+      "injuries": [
+        "内马尔(恢复中)"
+      ],
+      "notes": [
+        "渴望第六冠",
+        "维尼修斯进入巅峰"
+      ]
+    },
+    "KOR": {
+      "name": "韩国",
+      "code": "KOR",
+      "flag": "🇰🇷",
+      "group": "D",
+      "fifa_ranking": 22,
+      "elo_rating": 1830,
+      "squad_value_million": 260,
+      "attack_rating": 0.68,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "孙兴慜",
+        "金玟哉",
+        "李刚仁"
+      ],
+      "injuries": [],
+      "notes": [
+        "孙兴慜可能最后一届",
+        "亚洲传统强队"
+      ]
+    },
+    "CMR": {
+      "name": "喀麦隆",
+      "code": "CMR",
+      "flag": "🇨🇲",
+      "group": "D",
+      "fifa_ranking": 38,
+      "elo_rating": 1700,
+      "squad_value_million": 160,
+      "attack_rating": 0.62,
+      "defense_rating": 0.58,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.35,
+      "key_players": [
+        "姆贝莫",
+        "翁纳",
+        "恩库鲁"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲雄狮传统劲旅",
+        "身体对抗强"
+      ]
+    },
+    "ECU": {
+      "name": "厄瓜多尔",
+      "code": "ECU",
+      "flag": "🇪🇨",
+      "group": "D",
+      "fifa_ranking": 33,
+      "elo_rating": 1740,
+      "squad_value_million": 130,
+      "attack_rating": 0.6,
+      "defense_rating": 0.62,
+      "recent_form": [
+        1,
+        0,
+        1,
+        0.5,
+        0.5
+      ],
+      "tournament_experience": 0.25,
+      "key_players": [
+        "卡塞雷斯",
+        "帕雷德斯",
+        "莫伊塞斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "南美预选赛第四",
+        "高原主场优势"
+      ]
+    },
+    "ESP": {
+      "name": "西班牙",
+      "code": "ESP",
+      "flag": "🇪🇸",
+      "group": "E",
+      "fifa_ranking": 4,
+      "elo_rating": 2010,
+      "squad_value_million": 1100,
+      "attack_rating": 0.87,
+      "defense_rating": 0.8,
+      "recent_form": [
+        1,
+        1,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.85,
+      "key_players": [
+        "亚马尔",
+        "佩德里",
+        "罗德里"
+      ],
+      "injuries": [],
+      "notes": [
+        "欧洲杯冠军,黄金一代",
+        "亚马尔天才闪耀"
+      ]
+    },
+    "UZB": {
+      "name": "乌兹别克",
+      "code": "UZB",
+      "flag": "🇺🇿",
+      "group": "E",
+      "fifa_ranking": 55,
+      "elo_rating": 1580,
+      "squad_value_million": 30,
+      "attack_rating": 0.5,
+      "defense_rating": 0.55,
+      "recent_form": [
+        1,
+        0.5,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "肖穆罗多夫",
+        "法伊兹拉耶夫"
+      ],
+      "injuries": [],
+      "notes": [
+        "首次参加世界杯",
+        "亚洲预选赛突围"
+      ]
+    },
+    "CHL": {
+      "name": "智利",
+      "code": "CHL",
+      "flag": "🇨🇱",
+      "group": "E",
+      "fifa_ranking": 35,
+      "elo_rating": 1720,
+      "squad_value_million": 110,
+      "attack_rating": 0.58,
+      "defense_rating": 0.6,
+      "recent_form": [
+        0.5,
+        0,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.6,
+      "key_players": [
+        "桑切斯",
+        "比达尔"
+      ],
+      "injuries": [
+        "比达尔(恢复中)"
+      ],
+      "notes": [
+        "老将为主,经验丰富",
+        "更新换代阵痛期"
+      ]
+    },
+    "CAN": {
+      "name": "加拿大",
+      "code": "CAN",
+      "flag": "🇨🇦",
+      "group": "E",
+      "fifa_ranking": 40,
+      "elo_rating": 1680,
+      "squad_value_million": 150,
+      "attack_rating": 0.62,
+      "defense_rating": 0.58,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        1
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "戴维斯",
+        "大卫",
+        "布坎南"
+      ],
+      "injuries": [],
+      "notes": [
+        "东道主之一,主场优势",
+        "戴维斯速度惊人"
+      ]
+    },
+    "ENG": {
+      "name": "英格兰",
+      "code": "ENG",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "group": "F",
+      "fifa_ranking": 5,
+      "elo_rating": 2000,
+      "squad_value_million": 1500,
+      "attack_rating": 0.85,
+      "defense_rating": 0.78,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.75,
+      "key_players": [
+        "贝林厄姆",
+        "萨卡",
+        "福登"
+      ],
+      "injuries": [],
+      "notes": [
+        "阵容身价全球第一",
+        "贝林厄姆核心驱动"
+      ]
+    },
+    "COL": {
+      "name": "哥伦比亚",
+      "code": "COL",
+      "flag": "🇨🇴",
+      "group": "F",
+      "fifa_ranking": 12,
+      "elo_rating": 1900,
+      "squad_value_million": 350,
+      "attack_rating": 0.75,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        1
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "路易斯·迪亚斯",
+        "哈梅斯",
+        "阿里亚斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "美洲杯亚军,状态火热",
+        "路易斯·迪亚斯状态极佳"
+      ]
+    },
+    "EGY": {
+      "name": "埃及",
+      "code": "EGY",
+      "flag": "🇪🇬",
+      "group": "F",
+      "fifa_ranking": 30,
+      "elo_rating": 1760,
+      "squad_value_million": 200,
+      "attack_rating": 0.65,
+      "defense_rating": 0.65,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "萨拉赫",
+        "特雷泽盖",
+        "马尔万"
+      ],
+      "injuries": [],
+      "notes": [
+        "萨拉赫带队出征",
+        "非洲杯四强"
+      ]
+    },
+    "BOL": {
+      "name": "玻利维亚",
+      "code": "BOL",
+      "flag": "🇧🇴",
+      "group": "F",
+      "fifa_ranking": 83,
+      "elo_rating": 1420,
+      "squad_value_million": 10,
+      "attack_rating": 0.4,
+      "defense_rating": 0.42,
+      "recent_form": [
+        0,
+        0,
+        0.5,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "莫雷诺",
+        "阿尔塞"
+      ],
+      "injuries": [],
+      "notes": [
+        "时隔多年重返世界杯",
+        "海拔优势仅限主场"
+      ]
+    },
+    "GER": {
+      "name": "德国",
+      "code": "GER",
+      "flag": "🇩🇪",
+      "group": "G",
+      "fifa_ranking": 8,
+      "elo_rating": 1960,
+      "squad_value_million": 1000,
+      "attack_rating": 0.82,
+      "defense_rating": 0.76,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.85,
+      "key_players": [
+        "穆夏拉",
+        "维尔茨",
+        "哈弗茨"
+      ],
+      "injuries": [],
+      "notes": [
+        "新生代崛起,技战术革新",
+        "穆夏拉+维尔茨双核"
+      ]
+    },
+    "IRN": {
+      "name": "伊朗",
+      "code": "IRN",
+      "flag": "🇮🇷",
+      "group": "G",
+      "fifa_ranking": 21,
+      "elo_rating": 1830,
+      "squad_value_million": 85,
+      "attack_rating": 0.62,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        0
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "塔雷米",
+        "阿兹蒙",
+        "贝兰万德"
+      ],
+      "injuries": [
+        "贾汉巴赫什(伤疑)"
+      ],
+      "notes": [
+        "塔雷米突前(105场60球),门将贝兰万德经验足",
+        "边锋贾汉巴赫什伤疑;国内联赛停摆,本土球员缺节奏"
+      ]
+    },
+    "NZL": {
+      "name": "新西兰",
+      "code": "NZL",
+      "flag": "🇳🇿",
+      "group": "G",
+      "fifa_ranking": 93,
+      "elo_rating": 1400,
+      "squad_value_million": 8,
+      "attack_rating": 0.42,
+      "defense_rating": 0.48,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.12,
+      "key_players": [
+        "伍德",
+        "辛格",
+        "卡卡斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "队长伍德领衔(90场45球),但刚伤愈赛季仅3球",
+        "后防博萨尔坐镇;大洋洲预选赛碾压晋级"
+      ]
+    },
+    "GHA": {
+      "name": "加纳",
+      "code": "GHA",
+      "flag": "🇬🇭",
+      "group": "G",
+      "fifa_ranking": 42,
+      "elo_rating": 1660,
+      "squad_value_million": 120,
+      "attack_rating": 0.6,
+      "defense_rating": 0.56,
+      "recent_form": [
+        0.5,
+        0,
+        1,
+        0.5,
+        0
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "库杜斯",
+        "帕尔特伊",
+        "因纳基·威廉姆斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲传统强队,黑星闪耀",
+        "世界杯经验丰富"
+      ]
+    },
+    "POR": {
+      "name": "葡萄牙",
+      "code": "POR",
+      "flag": "🇵🇹",
+      "group": "H",
+      "fifa_ranking": 6,
+      "elo_rating": 1990,
+      "squad_value_million": 980,
+      "attack_rating": 0.84,
+      "defense_rating": 0.78,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        1
+      ],
+      "tournament_experience": 0.8,
+      "key_players": [
+        "C罗",
+        "B费",
+        "贝尔纳多"
+      ],
+      "injuries": [],
+      "notes": [
+        "C罗最后一届世界杯",
+        "中场创造力顶级"
+      ]
+    },
+    "MEX": {
+      "name": "墨西哥",
+      "code": "MEX",
+      "flag": "🇲🇽",
+      "group": "H",
+      "fifa_ranking": 14,
+      "elo_rating": 1880,
+      "squad_value_million": 200,
+      "attack_rating": 0.65,
+      "defense_rating": 0.65,
+      "recent_form": [
+        0.5,
+        1,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.6,
+      "key_players": [
+        "洛萨诺",
+        "希门尼斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "东道主之一,求突破16强魔咒",
+        "主场气氛火爆"
+      ]
+    },
+    "AUS": {
+      "name": "澳大利亚",
+      "code": "AUS",
+      "flag": "🇦🇺",
+      "group": "H",
+      "fifa_ranking": 25,
+      "elo_rating": 1810,
+      "squad_value_million": 110,
+      "attack_rating": 0.58,
+      "defense_rating": 0.62,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.35,
+      "key_players": [
+        "赫鲁斯蒂奇",
+        "杜克"
+      ],
+      "injuries": [],
+      "notes": [
+        "亚洲杯亚军",
+        "防守反击犀利"
+      ]
+    },
+    "SCO": {
+      "name": "苏格兰",
+      "code": "SCO",
+      "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+      "group": "H",
+      "fifa_ranking": 45,
+      "elo_rating": 1650,
+      "squad_value_million": 160,
+      "attack_rating": 0.58,
+      "defense_rating": 0.6,
+      "recent_form": [
+        0,
+        0.5,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "罗伯逊",
+        "麦克托米奈"
+      ],
+      "injuries": [],
+      "notes": [
+        "欧洲杯经验积累",
+        "麦克托米奈状态出色"
+      ]
+    },
+    "NED": {
+      "name": "荷兰",
+      "code": "NED",
+      "flag": "🇳🇱",
+      "group": "I",
+      "fifa_ranking": 7,
+      "elo_rating": 1970,
+      "squad_value_million": 850,
+      "attack_rating": 0.8,
+      "defense_rating": 0.76,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.7,
+      "key_players": [
+        "加克波",
+        "西蒙斯",
+        "范戴克"
+      ],
+      "injuries": [],
+      "notes": [
+        "无冕之王渴望加冕",
+        "全攻全守传统"
+      ]
+    },
+    "QAT": {
+      "name": "卡塔尔",
+      "code": "QAT",
+      "flag": "🇶🇦",
+      "group": "I",
+      "fifa_ranking": 34,
+      "elo_rating": 1710,
+      "squad_value_million": 45,
+      "attack_rating": 0.52,
+      "defense_rating": 0.55,
+      "recent_form": [
+        1,
+        0,
+        0.5,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "阿菲夫",
+        "阿里"
+      ],
+      "injuries": [],
+      "notes": [
+        "亚洲杯冠军两连霸",
+        "主打短传配合"
+      ]
+    },
+    "CRC": {
+      "name": "哥斯达黎加",
+      "code": "CRC",
+      "flag": "🇨🇷",
+      "group": "I",
+      "fifa_ranking": 50,
+      "elo_rating": 1600,
+      "squad_value_million": 40,
+      "attack_rating": 0.48,
+      "defense_rating": 0.58,
+      "recent_form": [
+        0.5,
+        0,
+        1,
+        0.5,
+        0
+      ],
+      "tournament_experience": 0.35,
+      "key_players": [
+        "坎贝尔",
+        "纳瓦斯"
+      ],
+      "injuries": [
+        "纳瓦斯(年龄大状态下滑)"
+      ],
+      "notes": [
+        "2014世界杯黑马",
+        "防守体系成熟"
+      ]
+    },
+    "SRB": {
+      "name": "塞尔维亚",
+      "code": "SRB",
+      "flag": "🇷🇸",
+      "group": "I",
+      "fifa_ranking": 27,
+      "elo_rating": 1790,
+      "squad_value_million": 350,
+      "attack_rating": 0.72,
+      "defense_rating": 0.65,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "弗拉霍维奇",
+        "米林科维奇",
+        "塔迪奇"
+      ],
+      "injuries": [],
+      "notes": [
+        "前场火力强劲",
+        "弗拉霍维奇射术精湛"
+      ]
+    },
+    "BEL": {
+      "name": "比利时",
+      "code": "BEL",
+      "flag": "🇧🇪",
+      "group": "J",
+      "fifa_ranking": 9,
+      "elo_rating": 1940,
+      "squad_value_million": 600,
+      "attack_rating": 0.78,
+      "defense_rating": 0.72,
+      "recent_form": [
+        1,
+        0.5,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.65,
+      "key_players": [
+        "德布劳内",
+        "多库",
+        "奥彭达"
+      ],
+      "injuries": [],
+      "notes": [
+        "黄金一代最后冲刺",
+        "德布劳内核心"
+      ]
+    },
+    "URU": {
+      "name": "乌拉圭",
+      "code": "URU",
+      "flag": "🇺🇾",
+      "group": "J",
+      "fifa_ranking": 13,
+      "elo_rating": 1890,
+      "squad_value_million": 300,
+      "attack_rating": 0.72,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.7,
+      "key_players": [
+        "努涅斯",
+        "巴尔韦德",
+        "阿劳霍"
+      ],
+      "injuries": [],
+      "notes": [
+        "两届世界杯冠军传统",
+        "巴尔韦德中场引擎"
+      ]
+    },
+    "TUN": {
+      "name": "突尼斯",
+      "code": "TUN",
+      "flag": "🇹🇳",
+      "group": "J",
+      "fifa_ranking": 36,
+      "elo_rating": 1710,
+      "squad_value_million": 80,
+      "attack_rating": 0.55,
+      "defense_rating": 0.6,
+      "recent_form": [
+        0.5,
+        1,
+        0,
+        0.5,
+        0.5
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "哈兹里",
+        "姆萨克尼"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲杯常客",
+        "防守纪律严明"
+      ]
+    },
+    "CHN": {
+      "name": "中国",
+      "code": "CHN",
+      "flag": "🇨🇳",
+      "group": "J",
+      "fifa_ranking": 68,
+      "elo_rating": 1500,
+      "squad_value_million": 40,
+      "attack_rating": 0.45,
+      "defense_rating": 0.48,
+      "recent_form": [
+        0.5,
+        0,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.05,
+      "key_players": [
+        "武磊",
+        "张玉宁",
+        "颜骏凌"
+      ],
+      "injuries": [],
+      "notes": [
+        "时隔24年重返世界杯",
+        "全国关注度最高"
+      ]
+    },
+    "ITA": {
+      "name": "意大利",
+      "code": "ITA",
+      "flag": "🇮🇹",
+      "group": "K",
+      "fifa_ranking": 10,
+      "elo_rating": 1930,
+      "squad_value_million": 700,
+      "attack_rating": 0.76,
+      "defense_rating": 0.8,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.85,
+      "key_players": [
+        "多纳鲁马",
+        "巴雷拉",
+        "基耶萨"
+      ],
+      "injuries": [],
+      "notes": [
+        "防守艺术大师",
+        "基耶萨恢复后状态回升"
+      ]
+    },
+    "MAR": {
+      "name": "摩洛哥",
+      "code": "MAR",
+      "flag": "🇲🇦",
+      "group": "K",
+      "fifa_ranking": 16,
+      "elo_rating": 1860,
+      "squad_value_million": 400,
+      "attack_rating": 0.72,
+      "defense_rating": 0.74,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "哈基米",
+        "齐耶赫",
+        "恩内斯里"
+      ],
+      "injuries": [],
+      "notes": [
+        "上届四强黑马",
+        "防守铁血+快速反击"
+      ]
+    },
+    "PAR": {
+      "name": "巴拉圭",
+      "code": "PAR",
+      "flag": "🇵🇾",
+      "group": "K",
+      "fifa_ranking": 52,
+      "elo_rating": 1590,
+      "squad_value_million": 65,
+      "attack_rating": 0.52,
+      "defense_rating": 0.58,
+      "recent_form": [
+        0,
+        0.5,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.35,
+      "key_players": [
+        "阿尔米隆",
+        "桑切斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "南美硬汉球队",
+        "防守反击"
+      ]
+    },
+    "IDN": {
+      "name": "印尼",
+      "code": "IDN",
+      "flag": "🇮🇩",
+      "group": "K",
+      "fifa_ranking": 90,
+      "elo_rating": 1410,
+      "squad_value_million": 15,
+      "attack_rating": 0.4,
+      "defense_rating": 0.42,
+      "recent_form": [
+        0.5,
+        0,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.02,
+      "key_players": [
+        "埃尔坎",
+        "阿斯纳维"
+      ],
+      "injuries": [],
+      "notes": [
+        "首次参加世界杯",
+        "东南亚足球代表"
+      ]
+    },
+    "CRO": {
+      "name": "克罗地亚",
+      "code": "CRO",
+      "flag": "🇭🇷",
+      "group": "L",
+      "fifa_ranking": 17,
+      "elo_rating": 1860,
+      "squad_value_million": 380,
+      "attack_rating": 0.75,
+      "defense_rating": 0.74,
+      "recent_form": [
+        0.5,
+        1,
+        0.5,
+        1,
+        1
+      ],
+      "tournament_experience": 0.8,
+      "key_players": [
+        "莫德里奇",
+        "科瓦契奇",
+        "格瓦迪奥尔"
+      ],
+      "injuries": [],
+      "notes": [
+        "上届季军,莫德里奇谢幕战",
+        "中场控制力世界顶级"
+      ]
+    },
+    "DEN": {
+      "name": "丹麦",
+      "code": "DEN",
+      "flag": "🇩🇰",
+      "group": "L",
+      "fifa_ranking": 19,
+      "elo_rating": 1850,
+      "squad_value_million": 350,
+      "attack_rating": 0.72,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "埃里克森",
+        "霍伊伦",
+        "克里斯滕森"
+      ],
+      "injuries": [],
+      "notes": [
+        "欧洲杯半决赛经验",
+        "团队足球典范"
+      ]
+    },
+    "ALG": {
+      "name": "阿尔及利亚",
+      "code": "ALG",
+      "flag": "🇩🇿",
+      "group": "L",
+      "fifa_ranking": 37,
+      "elo_rating": 1700,
+      "squad_value_million": 130,
+      "attack_rating": 0.62,
+      "defense_rating": 0.6,
+      "recent_form": [
+        1,
+        0,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "马赫雷斯",
+        "本纳赛尔"
+      ],
+      "injuries": [],
+      "notes": [
+        "2019非洲杯冠军",
+        "马赫雷斯领衔"
+      ]
+    },
+    "PAN": {
+      "name": "巴拿马",
+      "code": "PAN",
+      "flag": "🇵🇦",
+      "group": "L",
+      "fifa_ranking": 60,
+      "elo_rating": 1540,
+      "squad_value_million": 20,
+      "attack_rating": 0.45,
+      "defense_rating": 0.5,
+      "recent_form": [
+        0.5,
+        0,
+        1,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.15,
+      "key_players": [
+        "戈多伊",
+        "巴尔塞纳斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美预选赛晋级",
+        "防守型球队"
+      ]
+    },
+    "AUT": {
+      "name": "奥地利",
+      "code": "AUT",
+      "flag": "🇦🇹",
+      "fifa_ranking": 25,
+      "elo_rating": 1800,
+      "squad_value_million": 250,
+      "attack_rating": 0.7,
+      "defense_rating": 0.68,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "阿拉巴",
+        "萨比策"
+      ],
+      "injuries": [],
+      "notes": [
+        "欧洲杯表现出色"
+      ]
+    },
+    "BIH": {
+      "name": "波黑",
+      "code": "BIH",
+      "flag": "🇧🇦",
+      "fifa_ranking": 70,
+      "elo_rating": 1550,
+      "squad_value_million": 60,
+      "attack_rating": 0.52,
+      "defense_rating": 0.52,
+      "recent_form": [
+        0.5,
+        0,
+        0.5,
+        1,
+        0
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "哲科"
+      ],
+      "injuries": [],
+      "notes": [
+        "身体对抗强"
+      ]
+    },
+    "CIV": {
+      "name": "科特迪瓦",
+      "code": "CIV",
+      "flag": "🇨🇮",
+      "fifa_ranking": 35,
+      "elo_rating": 1720,
+      "squad_value_million": 300,
+      "attack_rating": 0.72,
+      "defense_rating": 0.68,
+      "recent_form": [
+        1,
+        1,
+        0.5,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "阿莱",
+        "凯西"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲传统劲旅"
+      ]
+    },
+    "COD": {
+      "name": "刚果民主共和国",
+      "code": "COD",
+      "flag": "🇨🇩",
+      "fifa_ranking": 60,
+      "elo_rating": 1600,
+      "squad_value_million": 80,
+      "attack_rating": 0.58,
+      "defense_rating": 0.56,
+      "recent_form": [
+        0.5,
+        1,
+        0.5,
+        0,
+        1
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "维萨"
+      ],
+      "injuries": [],
+      "notes": [
+        "身体素质出众"
+      ]
+    },
+    "CPV": {
+      "name": "佛得角",
+      "code": "CPV",
+      "flag": "🇨🇻",
+      "fifa_ranking": 65,
+      "elo_rating": 1580,
+      "squad_value_million": 20,
+      "attack_rating": 0.5,
+      "defense_rating": 0.52,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "门德斯"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲杯黑马"
+      ]
+    },
+    "CUW": {
+      "name": "库拉索",
+      "code": "CUW",
+      "flag": "🇨🇼",
+      "fifa_ranking": 85,
+      "elo_rating": 1400,
+      "squad_value_million": 15,
+      "attack_rating": 0.45,
+      "defense_rating": 0.45,
+      "recent_form": [
+        0.5,
+        0,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.05,
+      "key_players": [
+        "巴库纳"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美加勒比海球队"
+      ]
+    },
+    "CZE": {
+      "name": "捷克",
+      "code": "CZE",
+      "flag": "🇨🇿",
+      "fifa_ranking": 36,
+      "elo_rating": 1740,
+      "squad_value_million": 180,
+      "attack_rating": 0.65,
+      "defense_rating": 0.65,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.5,
+      "key_players": [
+        "希克",
+        "绍切克"
+      ],
+      "injuries": [],
+      "notes": [
+        "战术纪律性强"
+      ]
+    },
+    "HAI": {
+      "name": "海地",
+      "code": "HAI",
+      "flag": "🇭🇹",
+      "fifa_ranking": 86,
+      "elo_rating": 1410,
+      "squad_value_million": 10,
+      "attack_rating": 0.45,
+      "defense_rating": 0.42,
+      "recent_form": [
+        0,
+        1,
+        0.5,
+        0,
+        0.5
+      ],
+      "tournament_experience": 0.1,
+      "key_players": [
+        "皮埃罗"
+      ],
+      "injuries": [],
+      "notes": [
+        "中北美洲参赛队"
+      ]
+    },
+    "IRQ": {
+      "name": "伊拉克",
+      "code": "IRQ",
+      "flag": "🇮🇶",
+      "fifa_ranking": 58,
+      "elo_rating": 1580,
+      "squad_value_million": 15,
+      "attack_rating": 0.55,
+      "defense_rating": 0.52,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0,
+        1
+      ],
+      "tournament_experience": 0.2,
+      "key_players": [
+        "侯赛因"
+      ],
+      "injuries": [],
+      "notes": [
+        "亚洲杯表现突出"
+      ]
+    },
+    "JOR": {
+      "name": "约旦",
+      "code": "JOR",
+      "flag": "🇯🇴",
+      "fifa_ranking": 71,
+      "elo_rating": 1520,
+      "squad_value_million": 12,
+      "attack_rating": 0.52,
+      "defense_rating": 0.5,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.15,
+      "key_players": [
+        "塔马里"
+      ],
+      "injuries": [],
+      "notes": [
+        "亚洲杯亚军"
+      ]
+    },
+    "NOR": {
+      "name": "挪威",
+      "code": "NOR",
+      "flag": "🇳🇴",
+      "fifa_ranking": 44,
+      "elo_rating": 1720,
+      "squad_value_million": 450,
+      "attack_rating": 0.78,
+      "defense_rating": 0.62,
+      "recent_form": [
+        1,
+        0.5,
+        0,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.3,
+      "key_players": [
+        "哈兰德",
+        "厄德高"
+      ],
+      "injuries": [],
+      "notes": [
+        "哈兰德与厄德高双星闪耀"
+      ]
+    },
+    "RSA": {
+      "name": "南非",
+      "code": "RSA",
+      "flag": "🇿🇦",
+      "fifa_ranking": 59,
+      "elo_rating": 1610,
+      "squad_value_million": 40,
+      "attack_rating": 0.58,
+      "defense_rating": 0.6,
+      "recent_form": [
+        0.5,
+        1,
+        0.5,
+        1,
+        0.5
+      ],
+      "tournament_experience": 0.4,
+      "key_players": [
+        "塔乌"
+      ],
+      "injuries": [],
+      "notes": [
+        "非洲杯季军"
+      ]
+    },
+    "SWE": {
+      "name": "瑞典",
+      "code": "SWE",
+      "flag": "🇸🇪",
+      "fifa_ranking": 28,
+      "elo_rating": 1810,
+      "squad_value_million": 350,
+      "attack_rating": 0.74,
+      "defense_rating": 0.7,
+      "recent_form": [
+        1,
+        0,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.7,
+      "key_players": [
+        "伊萨克",
+        "哲凯赖什"
+      ],
+      "injuries": [],
+      "notes": [
+        "前场冲击力极强"
+      ]
+    },
+    "SUI": {
+      "name": "瑞士",
+      "code": "SUI",
+      "flag": "🇨🇭",
+      "fifa_ranking": 15,
+      "elo_rating": 1890,
+      "squad_value_million": 280,
+      "attack_rating": 0.72,
+      "defense_rating": 0.72,
+      "recent_form": [
+        1,
+        0.5,
+        1,
+        0.5,
+        1
+      ],
+      "tournament_experience": 0.65,
+      "key_players": [
+        "扎卡",
+        "阿坎吉"
+      ],
+      "injuries": [],
+      "notes": [
+        "防守稳健,大赛常客"
+      ]
+    }
+  }
+}

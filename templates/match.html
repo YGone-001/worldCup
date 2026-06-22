@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% block content %}
+{% if match and match.prediction %}
+{% set p = match.prediction %}
+<div class="prediction-card match-detail-premium {% if p.suspense.stars == '⭐⭐⭐⭐⭐' %} heartbeat-card{% endif %}" id="prediction-card">
+    
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <div class="hero-meta">{{ match.group }}组 · {{ match.date[5:] | replace('-', '/') }}</div>
+        <div class="hero-matchup">
+            <div class="hero-team">
+                <div class="hero-badge home-bg">{{ p.home_team.code }}</div>
+                <div class="hero-name">{{ p.home_team.name }}</div>
+            </div>
+            
+            <div class="hero-center">
+                {% if match.result %}
+                <div class="hero-score">{{ match.result.actual_score }}</div>
+                <div class="hero-status">终场</div>
+                {% else %}
+                <div class="hero-vs">VS</div>
+                {% endif %}
+            </div>
+
+            <div class="hero-team">
+                <div class="hero-badge away-bg">{{ p.away_team.code }}</div>
+                <div class="hero-name">{{ p.away_team.name }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 胜平负概率 -->
+    <div class="prob-cards-wrapper">
+        <div class="prob-card {% if p.ev_analysis and p.ev_analysis.home.is_value %}is-value{% endif %}">
+            {% if p.ev_analysis and p.ev_analysis.home.is_value %}
+            <div class="value-corner-badge" title="预期回报率 +{{ p.ev_analysis.home.ev }}% | 小注 {{ p.ev_analysis.home.kelly_pct }}%">🔥 盘口漏洞</div>
+            {% endif %}
+            <div class="prob-val prob-number home-color glitch-text-fx" data-text="{{ p.probabilities.home_win }}%">{{ p.probabilities.home_win }}%</div>
+            <div class="prob-lbl">{{ p.home_team.name }}</div>
+        </div>
+        <div class="prob-card {% if p.ev_analysis and p.ev_analysis.draw.is_value %}is-value{% endif %}">
+            {% if p.ev_analysis and p.ev_analysis.draw.is_value %}
+            <div class="value-corner-badge" title="预期回报率 +{{ p.ev_analysis.draw.ev }}% | 小注 {{ p.ev_analysis.draw.kelly_pct }}%">🔥 盘口漏洞</div>
+            {% endif %}
+            <div class="prob-val prob-number draw-color glitch-text-fx" data-text="{{ p.probabilities.draw }}%">{{ p.probabilities.draw }}%</div>
+            <div class="prob-lbl">平局</div>
+        </div>
+        <div class="prob-card {% if p.ev_analysis and p.ev_analysis.away.is_value %}is-value{% endif %}">
+            {% if p.ev_analysis and p.ev_analysis.away.is_value %}
+            <div class="value-corner-badge" title="预期回报率 +{{ p.ev_analysis.away.ev }}% | 小注 {{ p.ev_analysis.away.kelly_pct }}%">🔥 盘口漏洞</div>
+            {% endif %}
+            <div class="prob-val prob-number away-color glitch-text-fx" data-text="{{ p.probabilities.away_win }}%">{{ p.probabilities.away_win }}%</div>
+            <div class="prob-lbl">{{ p.away_team.name }}</div>
+        </div>
+    </div>
+    
+    <!-- 概率条 -->
+    <div class="probability-bar premium-bar">
+        <div class="bar-segment home-seg" data-width="{{ p.probabilities.home_win }}"></div>
+        <div class="bar-segment draw-seg" data-width="{{ p.probabilities.draw }}"></div>
+        <div class="bar-segment away-seg" data-width="{{ p.probabilities.away_win }}"></div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+        
+        <!-- Radar Chart -->
+        <div class="data-card col-span-2 radar-card">
+            <div class="data-title-row" onclick="toggleRadar()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                <h3 class="data-title" style="margin: 0; border: none; padding: 0;">🕸️ 全息战力雷达 (Hexagon Radar)</h3>
+                <span id="radarToggleIcon" style="color: #10b981; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">[ 点击展开 ]</span>
+            </div>
+            <div class="radar-container collapsed" id="radarContainer">
+                <canvas id="matchRadarChart"></canvas>
+            </div>
+            <script>
+                let radarChartInstance = null;
+                function toggleRadar() {
+                    const container = document.getElementById('radarContainer');
+                    const icon = document.getElementById('radarToggleIcon');
+                    if (container.classList.contains('collapsed')) {
+                        container.classList.remove('collapsed');
+                        icon.innerText = '[ 收起 ]';
+                        if(radarChartInstance) { setTimeout(() => radarChartInstance.resize(), 400); }
+                    } else {
+                        container.classList.add('collapsed');
+                        icon.innerText = '[ 点击展开 ]';
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const radarData = {{ p.radar | tojson | safe }};
+                    const ctx = document.getElementById('matchRadarChart').getContext('2d');
+                    
+                    radarChartInstance = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: radarData.labels,
+                            datasets: [
+                                {
+                                    label: '{{ p.home_team.name }}',
+                                    data: radarData.home,
+                                    backgroundColor: 'rgba(16, 185, 129, 0.3)', // Aurora Green
+                                    borderColor: '#10b981',
+                                    pointBackgroundColor: '#10b981',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: '#10b981',
+                                    borderWidth: 2,
+                                    fill: true
+                                },
+                                {
+                                    label: '{{ p.away_team.name }}',
+                                    data: radarData.away,
+                                    backgroundColor: 'rgba(6, 182, 212, 0.3)', // Deep Space Cyan
+                                    borderColor: '#06b6d4',
+                                    pointBackgroundColor: '#06b6d4',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: '#06b6d4',
+                                    borderWidth: 2,
+                                    fill: true
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: { color: 'rgba(255, 255, 255, 0.7)', font: { family: "'Inter', sans-serif" } }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#fff',
+                                    borderColor: 'rgba(255,255,255,0.1)',
+                                    borderWidth: 1
+                                }
+                            },
+                            scales: {
+                                r: {
+                                    angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                                    grid: { color: 'rgba(255, 255, 255, 0.1)', circular: false },
+                                    pointLabels: {
+                                        color: 'rgba(255, 255, 255, 0.8)',
+                                        font: { size: 10, family: "'Inter', sans-serif" }
+                                    },
+                                    ticks: {
+                                        display: false,
+                                        min: 0,
+                                        max: 100
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Glitch FX logic
+                    const glitchEls = document.querySelectorAll('.glitch-text-fx');
+                    function triggerGlitch() {
+                        glitchEls.forEach(el => el.classList.add('is-glitching'));
+                        setTimeout(() => {
+                            glitchEls.forEach(el => el.classList.remove('is-glitching'));
+                        }, 400 + Math.random() * 400); // Glitch duration
+                    }
+                    setTimeout(triggerGlitch, 500);
+
+                    {% if p.suspense.stars >= 4 %}
+                    setInterval(() => {
+                        if (Math.random() > 0.6) triggerGlitch();
+                    }, 3500);
+                    {% endif %}
+                });
+            </script>
+        </div>
+        
+        <!-- Score Top 3 -->
+        <div class="data-card">
+            <h3 class="data-title">🎯 最可能比分</h3>
+            <div class="score-pills">
+                {% for s in p.top_scores %}
+                <div class="score-pill {% if match.result and s.score == match.result.actual_score %}hit{% endif %}">
+                    <span class="sp-val">{{ s.score }}</span>
+                    <span class="sp-prob">{{ s.probability }}%</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Goals Prediction -->
+        <div class="data-card">
+            <h3 class="data-title">⚽ 进球数推测</h3>
+            <div class="goals-mini-grid">
+                <div class="goals-mini"><span>最可能</span><strong>{{ p.goals_prediction.most_likely }}</strong></div>
+                <div class="goals-mini"><span>大球(>2.5)</span><strong>{{ (p.goals_prediction.over_2_5 * 100) | round(1) }}%</strong></div>
+                <div class="goals-mini"><span>小球(<2.5)</span><strong>{{ (p.goals_prediction.under_2_5 * 100) | round(1) }}%</strong></div>
+            </div>
+            <div class="goals-bar-wrap">
+                <div class="goals-bar-fill over-fill" style="width: {{ (p.goals_prediction.over_2_5 * 100) }}%;"></div>
+                <div class="goals-bar-fill under-fill" style="width: {{ (p.goals_prediction.under_2_5 * 100) }}%;"></div>
+            </div>
+        </div>
+
+        {% if p.market and p.market.odds and p.market.implied_probabilities and p.market.implied_probabilities.home_win != None %}
+        <!-- Odds Table -->
+        <div class="data-card col-span-2">
+            <h3 class="data-title">⚖️ 机构隐含概率 vs 模型概率</h3>
+            <div class="premium-table-wrap">
+                <table class="premium-table">
+                    <thead>
+                        <tr><th>选项</th><th>外部赔率</th><th>隐含概率</th><th>模型概率</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="{% if p.ev_analysis and p.ev_analysis.home.is_value %}is-value-row{% endif %}">
+                            <td>主胜</td><td>{{ p.market.odds.home_win }}</td><td>{{ p.market.implied_probabilities.home_win }}%</td><td>{{ p.model_probabilities.home_win }}%</td>
+                        </tr>
+                        <tr class="{% if p.ev_analysis and p.ev_analysis.draw.is_value %}is-value-row{% endif %}">
+                            <td>平局</td><td>{{ p.market.odds.draw }}</td><td>{{ p.market.implied_probabilities.draw }}%</td><td>{{ p.model_probabilities.draw }}%</td>
+                        </tr>
+                        <tr class="{% if p.ev_analysis and p.ev_analysis.away.is_value %}is-value-row{% endif %}">
+                            <td>客胜</td><td>{{ p.market.odds.away_win }}</td><td>{{ p.market.implied_probabilities.away_win }}%</td><td>{{ p.model_probabilities.away_win }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Kelly Calculator -->
+        {% set has_value = p.ev_analysis and (p.ev_analysis.home.is_value or p.ev_analysis.draw.is_value or p.ev_analysis.away.is_value) %}
+        {% if has_value %}
+        <div class="data-card col-span-2 kelly-card">
+            <h3 class="data-title" style="color: var(--accent-gold);">💰 动态凯利仓位计算器 (Kelly Criterion)</h3>
+            <div class="kelly-container">
+                <div class="kelly-input-group">
+                    <label style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">设置模拟本金 (Bankroll)</label>
+                    <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
+                        <input type="range" id="bankrollSlider" min="1000" max="100000" step="1000" value="10000" style="flex-grow: 1; accent-color: var(--accent-gold); cursor: pointer;">
+                        <span id="bankrollDisplay" style="font-family: monospace; font-size: 1.2rem; font-weight: 700; color: #fff;">10,000</span>
+                    </div>
+                </div>
+                <div class="kelly-results">
+                    {% if p.ev_analysis.home.is_value %}
+                    <div class="kelly-row" data-kelly="{{ p.ev_analysis.home.kelly_pct }}" data-odds="{{ p.market.odds.home_win }}">
+                        <span class="k-label">主胜漏洞 ({{ p.ev_analysis.home.kelly_pct }}% 仓位)</span>
+                        <span class="k-bet" style="color: #10b981; font-weight: 700;">0</span>
+                        <span class="k-return" style="color: var(--text-secondary);">预计回报: <strong style="color: #3b82f6;">0</strong></span>
+                    </div>
+                    {% endif %}
+                    {% if p.ev_analysis.draw.is_value %}
+                    <div class="kelly-row" data-kelly="{{ p.ev_analysis.draw.kelly_pct }}" data-odds="{{ p.market.odds.draw }}">
+                        <span class="k-label">平局漏洞 ({{ p.ev_analysis.draw.kelly_pct }}% 仓位)</span>
+                        <span class="k-bet" style="color: #10b981; font-weight: 700;">0</span>
+                        <span class="k-return" style="color: var(--text-secondary);">预计回报: <strong style="color: #3b82f6;">0</strong></span>
+                    </div>
+                    {% endif %}
+                    {% if p.ev_analysis.away.is_value %}
+                    <div class="kelly-row" data-kelly="{{ p.ev_analysis.away.kelly_pct }}" data-odds="{{ p.market.odds.away_win }}">
+                        <span class="k-label">客胜漏洞 ({{ p.ev_analysis.away.kelly_pct }}% 仓位)</span>
+                        <span class="k-bet" style="color: #10b981; font-weight: 700;">0</span>
+                        <span class="k-return" style="color: var(--text-secondary);">预计回报: <strong style="color: #3b82f6;">0</strong></span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const slider = document.getElementById('bankrollSlider');
+                    const display = document.getElementById('bankrollDisplay');
+                    const rows = document.querySelectorAll('.kelly-row');
+                    
+                    function updateKelly() {
+                        const br = parseFloat(slider.value);
+                        display.innerText = br.toLocaleString();
+                        
+                        rows.forEach(row => {
+                            const kellyPct = parseFloat(row.getAttribute('data-kelly')) / 100;
+                            const odds = parseFloat(row.getAttribute('data-odds'));
+                            const betSize = br * kellyPct;
+                            const ret = betSize * odds;
+                            
+                            row.querySelector('.k-bet').innerText = '建议下单: ' + betSize.toLocaleString(undefined, {maximumFractionDigits:0});
+                            row.querySelector('.k-return strong').innerText = ret.toLocaleString(undefined, {maximumFractionDigits:0});
+                        });
+                    }
+                    if(slider) {
+                        slider.addEventListener('input', updateKelly);
+                        updateKelly();
+                    }
+                });
+            </script>
+        </div>
+        {% endif %}
+
+        <!-- Match Context (Intel) -->
+        <div class="data-card col-span-2">
+            <h3 class="data-title">📰 赛事风向标</h3>
+            <div class="context-list">
+                {% for note in p.key_info.home_notes %}
+                <div class="context-item"><span class="ctx-icon">💡</span> <span class="ctx-tag home-tag">{{ p.home_team.name }}</span> {{ note }}</div>
+                {% endfor %}
+                {% for inj in p.key_info.home_injuries %}
+                <div class="context-item"><span class="ctx-icon">🏥</span> <span class="ctx-tag home-tag">{{ p.home_team.name }}</span> <span class="injury-txt">{{ inj }}</span></div>
+                {% endfor %}
+                
+                {% for note in p.key_info.away_notes %}
+                <div class="context-item"><span class="ctx-icon">💡</span> <span class="ctx-tag away-tag">{{ p.away_team.name }}</span> {{ note }}</div>
+                {% endfor %}
+                {% for inj in p.key_info.away_injuries %}
+                <div class="context-item"><span class="ctx-icon">🏥</span> <span class="ctx-tag away-tag">{{ p.away_team.name }}</span> <span class="injury-txt">{{ inj }}</span></div>
+                {% endfor %}
+
+                <div class="context-item suspense-ctx">
+                    <span class="ctx-icon">🔥</span> <span class="ctx-tag">悬念指数</span> 
+                    <span class="suspense-stars">
+                        {% for i in range(p.suspense.stars) %}<span class="star filled">★</span>{% endfor %}{% for i in range(5 - p.suspense.stars) %}<span class="star empty">☆</span>{% endfor %}
+                    </span>
+                    <span style="color: var(--accent-gold); font-weight: 600;">{{ p.suspense.label }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 模型说明 -->
+    <div class="disclaimer-mini">
+        模型基于各队身价/排名/历史数据推演，仅供参考，不作盈亏保证。
+    </div>
+</div>
+
+<div class="back-nav">
+    <a href="/" class="back-link">← 返回比赛列表</a>
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="empty-icon">❌</p>
+    <p>未找到该比赛</p>
+    <a href="/" class="back-link">← 返回首页</a>
+</div>
+{% endif %}
+{% endblock %}

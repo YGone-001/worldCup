@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="match-detail-header" style="text-align: center; margin-bottom: 24px;">
+    <h2>💰 AI 智能投注策略舱</h2>
+    <p style="color: var(--text-secondary); margin-top: 8px;">自动扫描全盘赔率漏洞，结合蒙特卡洛联合概率，输出最优串关仓位模型。</p>
+</div>
+
+<div class="kelly-card" style="padding: 24px; border-radius: var(--radius-lg); max-width: 800px; margin: 0 auto;">
+    <h3 class="data-title" style="color: var(--accent-gold); border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 12px; margin-bottom: 16px;">全局资金池管控 (Global Bankroll)</h3>
+    <div class="kelly-input-group">
+        <label style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">设定总模拟本金</label>
+        <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
+            <input type="range" id="globalBankrollSlider" min="1000" max="100000" step="1000" value="10000" style="flex-grow: 1; accent-color: var(--accent-gold); cursor: pointer;">
+            <span id="globalBankrollDisplay" style="font-family: monospace; font-size: 1.4rem; font-weight: 800; color: #fbbf24;">10,000</span>
+        </div>
+    </div>
+</div>
+
+<div id="strategyLoading" style="text-align: center; padding: 48px; color: var(--text-secondary);">
+    <p>正在全盘扫描漏洞赔率并进行蒙特卡洛矩阵运算... ⏳</p>
+</div>
+
+<div id="strategyContent" style="display: none; max-width: 800px; margin: 32px auto; flex-direction: column; gap: 24px;">
+    
+    <!-- Double Card -->
+    <div class="data-card" id="doubleCard" style="border-left: 4px solid #10b981;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="margin:0; font-size: 1.2rem;">🔥 绝杀二串一 <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">(最稳组合)</span></h3>
+            <div style="text-align: right;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">联合胜率: <span id="doubleProb" style="color:#10b981; font-weight:700;">--</span></div>
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">复合赔率: <span id="doubleOdds" style="color:#fff; font-weight:700;">--</span></div>
+            </div>
+        </div>
+        <div id="doubleLegs" style="background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
+            <!-- legs injected here -->
+        </div>
+        <div class="kelly-row" id="doubleKellyRow" data-kelly="0" data-odds="0" style="margin-top: 16px;">
+            <span class="k-label">AI 建议仓位 (<span id="doubleKellyPct">0</span>%)</span>
+            <span class="k-bet" style="color: #10b981; font-weight: 700; font-size:1.3rem;">0</span>
+            <span class="k-return" style="color: var(--text-secondary);">预计总回报: <strong style="color: #3b82f6; font-size:1.3rem;">0</strong></span>
+        </div>
+    </div>
+
+    <!-- Treble Card -->
+    <div class="data-card" id="trebleCard" style="border-left: 4px solid #f59e0b;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="margin:0; font-size: 1.2rem;">💣 搏冷三串一 <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">(高赔率组合)</span></h3>
+            <div style="text-align: right;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">联合胜率: <span id="trebleProb" style="color:#f59e0b; font-weight:700;">--</span></div>
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">复合赔率: <span id="trebleOdds" style="color:#fff; font-weight:700;">--</span></div>
+            </div>
+        </div>
+        <div id="trebleLegs" style="background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;">
+            <!-- legs injected here -->
+        </div>
+        <div class="kelly-row" id="trebleKellyRow" data-kelly="0" data-odds="0" style="margin-top: 16px;">
+            <span class="k-label">AI 建议仓位 (<span id="trebleKellyPct">0</span>%)</span>
+            <span class="k-bet" style="color: #f59e0b; font-weight: 700; font-size:1.3rem;">0</span>
+            <span class="k-return" style="color: var(--text-secondary);">预计总回报: <strong style="color: #3b82f6; font-size:1.3rem;">0</strong></span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('globalBankrollSlider');
+    const display = document.getElementById('globalBankrollDisplay');
+    
+    const strategyRows = [
+        document.getElementById('doubleKellyRow'),
+        document.getElementById('trebleKellyRow')
+    ];
+
+    function renderLegs(container, legs) {
+        container.innerHTML = legs.map(l => `
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+                <span style="color: #cbd5e1; font-weight: 600;">${l.match_name}</span>
+                <span>
+                    <span style="color: #10b981; font-weight:600; margin-right: 8px;">${l.outcome}</span>
+                    <span style="color: var(--text-secondary);">@${l.odds.toFixed(2)}</span>
+                </span>
+            </div>
+        `).join('');
+    }
+
+    function updateBankroll() {
+        const br = parseFloat(slider.value);
+        display.innerText = br.toLocaleString();
+        
+        strategyRows.forEach(row => {
+            if(!row || !row.hasAttribute('data-kelly')) return;
+            const kellyPct = parseFloat(row.getAttribute('data-kelly')) / 100;
+            const odds = parseFloat(row.getAttribute('data-odds'));
+            if(kellyPct > 0) {
+                const betSize = br * kellyPct;
+                const ret = betSize * odds;
+                row.querySelector('.k-bet').innerText = '¥ ' + betSize.toLocaleString(undefined, {maximumFractionDigits:0});
+                row.querySelector('.k-return strong').innerText = '¥ ' + ret.toLocaleString(undefined, {maximumFractionDigits:0});
+            } else {
+                row.querySelector('.k-bet').innerText = '无需操作';
+                row.querySelector('.k-return strong').innerText = '--';
+            }
+        });
+    }
+
+    slider.addEventListener('input', updateBankroll);
+
+    fetch('/api/strategy/recommendations')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('strategyLoading').style.display = 'none';
+            document.getElementById('strategyContent').style.display = 'flex';
+            
+            if(data.best_double) {
+                document.getElementById('doubleProb').innerText = data.best_double.combined_prob + '%';
+                document.getElementById('doubleOdds').innerText = '@' + data.best_double.combined_odds;
+                document.getElementById('doubleKellyPct').innerText = data.best_double.kelly_pct;
+                document.getElementById('doubleKellyRow').setAttribute('data-kelly', data.best_double.kelly_pct);
+                document.getElementById('doubleKellyRow').setAttribute('data-odds', data.best_double.combined_odds);
+                renderLegs(document.getElementById('doubleLegs'), data.best_double.legs);
+            } else {
+                document.getElementById('doubleCard').innerHTML = '<p style="color:var(--text-muted); text-align:center;">当前盘口漏洞池不足，无法生成稳健组合。</p>';
+            }
+
+            if(data.best_treble) {
+                document.getElementById('trebleProb').innerText = data.best_treble.combined_prob + '%';
+                document.getElementById('trebleOdds').innerText = '@' + data.best_treble.combined_odds;
+                document.getElementById('trebleKellyPct').innerText = data.best_treble.kelly_pct;
+                document.getElementById('trebleKellyRow').setAttribute('data-kelly', data.best_treble.kelly_pct);
+                document.getElementById('trebleKellyRow').setAttribute('data-odds', data.best_treble.combined_odds);
+                renderLegs(document.getElementById('trebleLegs'), data.best_treble.legs);
+            } else {
+                document.getElementById('trebleCard').innerHTML = '<p style="color:var(--text-muted); text-align:center;">当前盘口漏洞池不足，无法生成搏冷组合。</p>';
+            }
+
+            updateBankroll();
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('strategyLoading').innerHTML = '<span style="color:#ef4444;">系统异常，无法生成策略。请稍后重试。</span>';
+        });
+});
+</script>
+{% endblock %}

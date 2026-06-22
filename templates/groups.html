@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header schedule-top">
+    <h1 class="page-title">实时小组积分榜</h1>
+    <p class="page-subtitle">按 积分 > 净胜球 > 进球数 动态排序</p>
+</section>
+
+<div class="groups-grid">
+    {% for group_name, teams in groups.items() %}
+    <div class="group-card standings-card-premium" style="animation-delay: {{ loop.index0 * 0.06 }}s; overflow-x: auto;">
+        <div class="group-header-premium">
+            <span class="gh-letter">{{ group_name }}</span>
+            <span class="gh-text">组积分榜</span>
+        </div>
+        <table class="standings-table-premium">
+            <thead>
+                <tr>
+                    <th class="col-team">球队</th>
+                    <th class="col-num">场</th>
+                    <th class="col-num">胜</th>
+                    <th class="col-num">平</th>
+                    <th class="col-num">负</th>
+                    <th class="col-num">进/失</th>
+                    <th class="col-num">净</th>
+                    <th class="col-pts">积</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in teams %}
+                <tr class="{% if loop.index <= 2 %}rank-advancing-premium{% endif %}">
+                    <td class="col-team">
+                        <div class="team-cell">
+                            <span class="rank-num">{{ loop.index }}</span>
+                            {% if row.team.flag %}
+                            <span class="team-badge-micro">{{ row.team.flag }}</span>
+                            {% else %}
+                            <span class="team-badge-micro txt">{{ row.team.code }}</span>
+                            {% endif %}
+                            <div class="team-name-wrap">
+                                <span class="team-name">{{ row.team.name }}</span>
+                                <span class="team-fifa">FIFA: {{ row.team.fifa_ranking }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-num">{{ row.pld }}</td>
+                    <td class="col-num">{{ row.w }}</td>
+                    <td class="col-num">{{ row.d }}</td>
+                    <td class="col-num">{{ row.l }}</td>
+                    <td class="col-num"><span class="pill-stat normal">{{ row.gf }}/{{ row.ga }}</span></td>
+                    <td class="col-num">
+                        <span class="pill-stat {% if row.gd > 0 %}pos{% elif row.gd < 0 %}neg{% else %}zero{% endif %}">
+                            {% if row.gd > 0 %}+{% endif %}{{ row.gd }}
+                        </span>
+                    </td>
+                    <td class="col-pts"><span class="pill-stat pts-pill">{{ row.pts }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

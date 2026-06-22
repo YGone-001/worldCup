@@ -1,0 +1,20 @@
+Match: 厄瓜多尔 vs 库拉索
+Win/Draw/Loss probabilities: {'home_win': 64, 'draw': 23, 'away_win': 13}
+Goal Expectancy: Home 2.07 - Away 0.83
+Most Likely Score (Top 3): [{'score': '2-0', 'home': 2, 'away': 0, 'probability': 12.0}, {'score': '1-1', 'home': 1, 'away': 1, 'probability': 11.1}, {'score': '1-0', 'home': 1, 'away': 0, 'probability': 10.2}]
+----------------------------------------
+Match: 德国 vs 科特迪瓦
+Win/Draw/Loss probabilities: {'home_win': 55, 'draw': 25, 'away_win': 20}
+Goal Expectancy: Home 2.02 - Away 1.17
+Most Likely Score (Top 3): [{'score': '1-1', 'home': 1, 'away': 1, 'probability': 11.4}, {'score': '2-1', 'home': 2, 'away': 1, 'probability': 10.0}, {'score': '2-0', 'home': 2, 'away': 0, 'probability': 8.6}]
+----------------------------------------
+Match: 日本 vs 突尼斯
+Win/Draw/Loss probabilities: {'home_win': 56, 'draw': 25, 'away_win': 18}
+Goal Expectancy: Home 1.94 - Away 1.03
+Most Likely Score (Top 3): [{'score': '1-1', 'home': 1, 'away': 1, 'probability': 12.0}, {'score': '2-1', 'home': 2, 'away': 1, 'probability': 10.1}, {'score': '2-0', 'home': 2, 'away': 0, 'probability': 9.8}]
+----------------------------------------
+Match: 荷兰 vs 瑞典
+Win/Draw/Loss probabilities: {'home_win': 50, 'draw': 26, 'away_win': 24}
+Goal Expectancy: Home 1.88 - Away 1.24
+Most Likely Score (Top 3): [{'score': '1-1', 'home': 1, 'away': 1, 'probability': 12.0}, {'score': '2-1', 'home': 2, 'away': 1, 'probability': 9.8}, {'score': '2-0', 'home': 2, 'away': 0, 'probability': 7.9}]
+----------------------------------------

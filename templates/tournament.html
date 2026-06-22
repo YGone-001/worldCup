@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="match-detail-header" style="text-align: center; margin-bottom: 24px;">
+    <h2>🏆 蒙特卡洛锦标赛推演引擎</h2>
+    <p style="color: var(--text-secondary); margin-top: 8px;">基于 1,000 次平行宇宙模拟，结合 48 队完整小组赛制与动态 Elo 引擎计算的晋级概率</p>
+    
+    <div class="hero-banner" style="margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto; padding: 24px; border-radius: var(--radius-lg);">
+        <div style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 800; margin-bottom: 12px; letter-spacing: 0.1em;">🔥 最可能上演的决赛对阵</div>
+        <div id="top-matchup" style="font-size: 2rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);">跑演中...</div>
+    </div>
+</div>
+<div class="particle-tree-wrapper">
+    <div class="tree-overlay-title">🪐 蒙特卡洛平行宇宙 · 光子流体树</div>
+    <canvas id="particleCanvas"></canvas>
+</div>
+
+<div class="tournament-container" style="overflow-x: auto; margin-top: 32px;">
+    <table class="tournament-table premium-table" style="width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); overflow: hidden;">
+        <thead>
+            <tr style="background: rgba(255,255,255,0.05); text-align: left; border-bottom: 1px solid var(--glass-border);">
+                <th style="padding: 16px; text-align: center;">排名</th>
+                <th style="padding: 16px;">球队</th>
+                <th style="padding: 16px; width: 12%;">夺冠 (Win)</th>
+                <th style="padding: 16px; width: 12%;">决赛 (Final)</th>
+                <th style="padding: 16px; width: 12%;">四强 (SF)</th>
+                <th style="padding: 16px; width: 12%;">八强 (QF)</th>
+                <th style="padding: 16px; width: 12%;">16强 (R16)</th>
+                <th style="padding: 16px; width: 12%;">32强 (R32)</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+            <tr><td colspan="8" style="text-align:center; padding: 32px;">正在运行 1,000 次蒙特卡洛推演，请稍候... ⏳</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+function createProgressBar(percent, colorStr) {
+    if (percent === 0) return '<span style="color:var(--text-muted);">0%</span>';
+    return `
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="flex-grow: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: ${percent}%; height: 100%; background: ${colorStr};"></div>
+            </div>
+            <span style="font-weight: 600; width: 40px; text-align: right; color: ${colorStr};">${percent}%</span>
+        </div>
+    `;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch('/api/v1/tournament')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = '';
+            
+            document.getElementById('top-matchup').innerText = `${data.top_matchup.teams} (${data.top_matchup.probability}%)`;
+            
+            data.leaderboard.forEach((team, index) => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.02)';
+                
+                // Highlight top 3
+                let rankStyle = '';
+                if (index === 0) rankStyle = 'color: #fbbf24; font-weight: 900; font-size: 1.4rem; text-shadow: 0 0 10px rgba(251,191,36,0.3);';
+                else if (index === 1) rankStyle = 'color: #94a3b8; font-weight: 800; font-size: 1.2rem;';
+                else if (index === 2) rankStyle = 'color: #b45309; font-weight: 800; font-size: 1.2rem;';
+                else rankStyle = 'color: var(--text-secondary);';
+                
+                tr.innerHTML = `
+                    <td style="padding: 12px; text-align: center; ${rankStyle}">${index + 1}</td>
+                    <td style="padding: 12px; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="team-badge-micro">${team.flag}</span>
+                            <span style="font-weight: 700; font-size: 1.05rem;">${team.name}</span>
+                        </div>
+                    </td>
+                    <td style="padding: 12px;">${createProgressBar(team.win, '#10b981')}</td>
+                    <td style="padding: 12px;">${createProgressBar(team.final, '#3b82f6')}</td>
+                    <td style="padding: 12px;">${createProgressBar(team.sf, '#a855f7')}</td>
+                    <td style="padding: 12px;">${createProgressBar(team.qf, '#f59e0b')}</td>
+                    <td style="padding: 12px;">${createProgressBar(team.ro16, '#64748b')}</td>
+                    <td style="padding: 12px;">${createProgressBar(team.group_adv, '#475569')}</td>
+                `;
+                
+                tr.addEventListener('mouseover', () => tr.style.background = 'rgba(255,255,255,0.03)');
+                tr.addEventListener('mouseout', () => tr.style.background = 'transparent');
+                
+                tbody.appendChild(tr);
+            });
+
+            // 初始化光子流体树
+            initParticleTree(data.leaderboard);
+        });
+});
+
+function initParticleTree(leaderboard) {
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    
+    // Top 8 Teams
+    const teams = leaderboard.slice(0, 8);
+    const w = canvas.width;
+    const h = canvas.height;
+    
+    const stageX = (i) => 80 + i * ((w - 150) / 5);
+    const getTeamY = (index) => 40 + index * ((h - 80) / 7);
+    const getChampY = () => h / 2;
+    
+    const paths = [];
+    teams.forEach((t, i) => {
+        const startY = getTeamY(i);
+        const endY = getChampY();
+        const winProb = parseFloat(t.win) / 100;
+        
+        // Colors mapping to team index
+        const colors = [
+            'rgba(16, 185, 129, 0.4)', // Green
+            'rgba(59, 130, 246, 0.4)', // Blue
+            'rgba(168, 85, 247, 0.4)', // Purple
+            'rgba(245, 158, 11, 0.4)', // Orange
+            'rgba(239, 68, 68, 0.4)',  // Red
+            'rgba(6, 182, 212, 0.4)',  // Cyan
+            'rgba(236, 72, 153, 0.4)', // Pink
+            'rgba(163, 230, 53, 0.4)'  // Lime
+        ];
+        
+        paths.push({
+            name: t.name,
+            y0: startY,
+            y1: endY,
+            prob: winProb,
+            color: colors[i % colors.length]
+        });
+    });
+    
+    const particles = [];
+    
+    function spawnParticle() {
+        const path = paths[Math.floor(Math.random() * paths.length)];
+        // Spawn more heavily on higher probability paths
+        if (Math.random() > path.prob * 3 + 0.05) return;
+        
+        particles.push({
+            path: path,
+            progress: 0,
+            speed: 0.003 + Math.random() * 0.005,
+            size: 1 + Math.random() * 1.5
+        });
+    }
+    
+    function drawBezier(x0, y0, x1, y1, width, color) {
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.bezierCurveTo((x0+x1)/2, y0, (x0+x1)/2, y1, x1, y1);
+        ctx.lineWidth = width;
+        ctx.strokeStyle = color;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+    }
+    
+    function getBezierXY(t, x0, y0, x1, y1) {
+        const xc = (x0+x1)/2;
+        const mt = 1-t;
+        const x = mt*mt*mt*x0 + 3*mt*mt*t*xc + 3*mt*t*t*xc + t*t*t*x1;
+        const y = mt*mt*mt*y0 + 3*mt*mt*t*y0 + 3*mt*t*t*y1 + t*t*t*y1;
+        return {x, y};
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        
+        // Stage Labels
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = '600 12px Inter';
+        ctx.textAlign = 'center';
+        const labels = ['Top 8', 'R16', 'QF', 'SF', 'Final', 'Champion'];
+        labels.forEach((lbl, i) => {
+            ctx.fillText(lbl, stageX(i), 20);
+        });
+        
+        // Paths
+        paths.forEach(p => {
+            const baseW = Math.max(2, p.prob * 40);
+            drawBezier(stageX(0), p.y0, stageX(5), p.y1, baseW, p.color);
+            
+            // Team Label
+            ctx.fillStyle = '#fff';
+            ctx.font = '700 13px Inter';
+            ctx.textAlign = 'right';
+            ctx.fillText(p.name, stageX(0) - 15, p.y0 + 4);
+        });
+        
+        // Trophy
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '28px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText('🏆', stageX(5) + 15, getChampY() + 10);
+        
+        // Flowing Particles
+        for(let i=0; i<5; i++) spawnParticle();
+        
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.progress += p.speed;
+            if (p.progress > 1) {
+                particles.splice(i, 1);
+                continue;
+            }
+            const pos = getBezierXY(p.progress, stageX(0), p.path.y0, stageX(5), p.path.y1);
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, p.size, 0, Math.PI*2);
+            ctx.fillStyle = '#fff';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#fff';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
+</script>
+{% endblock %}
